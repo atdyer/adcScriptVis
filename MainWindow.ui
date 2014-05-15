@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Adcirc Visualization and Scripting Tool</string>
   </property>
+  <property name="windowOpacity">
+   <double>1.000000000000000</double>
+  </property>
   <property name="styleSheet">
    <string notr="true">QDockWidget  {
     border: 1px solid lightgray;
@@ -25,6 +28,9 @@ QDockWidget::title  {
   </property>
   <property name="tabShape">
    <enum>QTabWidget::Rounded</enum>
+  </property>
+  <property name="dockOptions">
+   <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -68,6 +74,9 @@ QDockWidget::title  {
         <enum>QFrame::Raised</enum>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="spacing">
+         <number>0</number>
+        </property>
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -81,37 +90,84 @@ QDockWidget::title  {
          <number>0</number>
         </property>
         <item>
-         <widget class="QTreeWidget" name="treeWidget">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <property name="spacing">
+           <number>0</number>
           </property>
+          <item>
+           <widget class="QPushButton" name="fileSystemButton">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>File System</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">navigatorButtons</string>
+            </attribute>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="openDocumentsButton">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Open Documents</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">navigatorButtons</string>
+            </attribute>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="FileSystemViewer" name="treeView">
           <property name="styleSheet">
-           <string notr="true">border: 1px solid #3A3939;
-border-radius: 3px;</string>
+           <string notr="true">alternate-background-color: #3A3939;
+color: silver;
+border: 1px solid #3A3939;
+border-radius: 3px;
+padding: 1px;</string>
           </property>
-          <attribute name="headerVisible">
-           <bool>false</bool>
-          </attribute>
-          <column>
-           <property name="text">
-            <string notr="true">1</string>
-           </property>
-          </column>
          </widget>
         </item>
        </layout>
-       <zorder>widget_2</zorder>
-       <zorder>treeWidget</zorder>
       </widget>
-      <widget class="OpenGLWidget" name="widget_2" native="true">
+      <widget class="OpenGLWidget" name="glPanel" native="true">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-         <horstretch>0</horstretch>
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>8</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="baseSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
        </property>
        <property name="styleSheet">
         <string notr="true"/>
@@ -135,6 +191,10 @@ border-radius: 3px;</string>
      <string>File</string>
     </property>
     <addaction name="actionOpen"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionSave_All"/>
+    <addaction name="separator"/>
+    <addaction name="actionClose"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuWindow">
@@ -145,7 +205,7 @@ border-radius: 3px;</string>
      <property name="title">
       <string>Views</string>
      </property>
-     <addaction name="actionScripting"/>
+     <addaction name="actionScriptingToggle"/>
     </widget>
     <addaction name="menuViews"/>
     <addaction name="actionFull_Screen"/>
@@ -169,24 +229,27 @@ border-radius: 3px;</string>
     <set>Qt::BottomDockWidgetArea</set>
    </property>
    <property name="windowTitle">
-    <string>:: Scripting ::</string>
+    <string>Scripting</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>8</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents">
     <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
+      <number>2</number>
+     </property>
      <property name="leftMargin">
-      <number>4</number>
+      <number>2</number>
      </property>
      <property name="topMargin">
-      <number>4</number>
+      <number>2</number>
      </property>
      <property name="rightMargin">
-      <number>4</number>
+      <number>2</number>
      </property>
      <property name="bottomMargin">
-      <number>4</number>
+      <number>2</number>
      </property>
      <item>
       <widget class="ScriptingWidget" name="scriptingWidget" native="true"/>
@@ -194,8 +257,48 @@ border-radius: 3px;</string>
     </layout>
    </widget>
   </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QToolButton:pressed {
+    background-color: #4A4949;
+    border: 1px solid silver;
+    border-radius: 3px;
+}</string>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>20</width>
+     <height>20</height>
+    </size>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonIconOnly</enum>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionOpen"/>
+   <addaction name="actionSave"/>
+   <addaction name="actionSave_All"/>
+  </widget>
   <action name="actionOpen">
+   <property name="icon">
+    <iconset resource="images/icons.qrc">
+     <normaloff>:/icons/icons/open32.png</normaloff>:/icons/icons/open32.png</iconset>
+   </property>
    <property name="text">
+    <string>Open</string>
+   </property>
+   <property name="iconText">
     <string>Open</string>
    </property>
   </action>
@@ -204,7 +307,7 @@ border-radius: 3px;</string>
     <string>Exit</string>
    </property>
   </action>
-  <action name="actionScripting">
+  <action name="actionScriptingToggle">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -222,6 +325,35 @@ border-radius: 3px;</string>
    <property name="text">
     <string>Full Screen</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+F11</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="icon">
+    <iconset resource="images/icons.qrc">
+     <normaloff>:/icons/icons/save32.png</normaloff>:/icons/icons/save32.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="actionSave_All">
+   <property name="icon">
+    <iconset resource="images/icons.qrc">
+     <normaloff>:/icons/icons/saveall32.png</normaloff>:/icons/icons/saveall32.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save All</string>
+   </property>
+  </action>
+  <action name="actionClose">
+   <property name="text">
+    <string>Close</string>
+   </property>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
@@ -238,7 +370,17 @@ border-radius: 3px;</string>
    <header>OpenGL/OpenGLWidget.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>FileSystemViewer</class>
+   <extends>QTreeView</extends>
+   <header>Widgets/Navigator/FileSystemViewer.h</header>
+  </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="images/icons.qrc"/>
+ </resources>
  <connections/>
+ <buttongroups>
+  <buttongroup name="navigatorButtons"/>
+ </buttongroups>
 </ui>

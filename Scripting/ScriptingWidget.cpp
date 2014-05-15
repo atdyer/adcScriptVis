@@ -12,29 +12,43 @@ ScriptingWidget::ScriptingWidget(QWidget *parent) :
 
 ScriptingWidget::~ScriptingWidget()
 {
+	SaveSettings();
 	delete ui;
 }
 
 
 void ScriptingWidget::BuildWidget()
 {
-	ui->verticalLayout->setContentsMargins(0, 0, 0, 0);
+	ui->splitter->setStretchFactor(0, 1);
+	ui->splitter->setStretchFactor(1, 4);
+	BuildToolbar();
+	LoadSettings();
+}
 
+
+void ScriptingWidget::BuildToolbar()
+{
 	// Create the toolbar
 	QToolBar *toolBar = new QToolBar();
 	toolBar->setContentsMargins(0, 0, 0, 0);
-	ui->verticalLayout->addWidget(toolBar);
-
-	// Create the text editor
-	ScriptingTextEdit *textEdit = new ScriptingTextEdit();
-	ui->verticalLayout->addWidget(textEdit);
+	ui->toolbarLayout->addWidget(toolBar);
 
 	// Create Actions
-	QAction *runAction = new QAction(tr("Run Script"), 0);
-	QAction *saveAction = new QAction(tr("Save Script"), 0);
-	QAction *openAction = new QAction(tr("Open Script"), 0);
-	QWidget *spacer = new QWidget();
-	QAction *helpAction = new QAction(tr("Help"), 0);
+	QAction *runAction = new QAction(tr("Run Script"), this);
+	QAction *saveAction = new QAction(tr("Save Script"), this);
+	QAction *openAction = new QAction(tr("Open Script"), this);
+	QWidget *spacer = new QWidget(this);
+//	QAction *helpAction = new QAction(tr("Help"), 0);
+	QButtonGroup *group = new QButtonGroup(this);
+	QPushButton *editorButton = new QPushButton("Editor", this);
+	QPushButton *consoleButton = new QPushButton("Console", this);
+	editorButton->setCheckable(true);
+	editorButton->setChecked(true);
+	consoleButton->setCheckable(true);
+	consoleButton->setChecked(false);
+	group->addButton(editorButton);
+	group->addButton(consoleButton);
+	group->setExclusive(true);
 
 	// Set up connections and such
 	spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -44,5 +58,22 @@ void ScriptingWidget::BuildWidget()
 	toolBar->addAction(saveAction);
 	toolBar->addAction(openAction);
 	toolBar->addWidget(spacer);
-	toolBar->addAction(helpAction);
+	toolBar->addWidget(editorButton);
+	toolBar->addWidget(consoleButton);
+//	toolBar->addAction(helpAction);
+}
+
+
+void ScriptingWidget::LoadSettings()
+{
+	QSettings settings;
+	ui->splitter->restoreState(settings.value("scripting/splitter").toByteArray());
+
+}
+
+
+void ScriptingWidget::SaveSettings()
+{
+	QSettings settings;
+	settings.setValue("scripting/splitter", ui->splitter->saveState());
 }

@@ -17,15 +17,18 @@ SOURCES += main.cpp\
         MainWindow.cpp \
     Scripting/ScriptingWidget.cpp \
     Scripting/ScriptingTextEdit.cpp \
-    OpenGL/OpenGLWidget.cpp
+    OpenGL/OpenGLWidget.cpp \
+    Widgets/Navigator/FileSystemViewer.cpp
 
 HEADERS  += MainWindow.h \
     Scripting/ScriptingWidget.h \
     Scripting/ScriptingTextEdit.h \
-    OpenGL/OpenGLWidget.h
+    OpenGL/OpenGLWidget.h \
+    Widgets/Navigator/FileSystemViewer.h
 
 FORMS    += MainWindow.ui \
     Scripting/ScriptingWidget.ui
 
 RESOURCES += \
-    qdarkstyle/style.qrc
+    qdarkstyle/style.qrc \
+    images/icons.qrc
