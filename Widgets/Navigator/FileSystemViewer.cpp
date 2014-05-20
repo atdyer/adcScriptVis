@@ -11,6 +11,12 @@ FileSystemViewer::FileSystemViewer(QWidget *parent) :
 }
 
 
+QFileSystemModel *FileSystemViewer::fileSystemModel()
+{
+	return model;
+}
+
+
 void FileSystemViewer::createModel()
 {
 	model = new QFileSystemModel(this);

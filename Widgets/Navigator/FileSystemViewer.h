@@ -12,6 +12,8 @@ class FileSystemViewer : public QTreeView
 	public:
 		explicit FileSystemViewer(QWidget *parent = 0);
 
+		QFileSystemModel *fileSystemModel();
+
 	private:
 
 		QFileSystemModel	*model;

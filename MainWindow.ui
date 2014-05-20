@@ -148,6 +148,16 @@ padding: 1px;</string>
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QProgressBar" name="progressBar">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="value">
+           <number>0</number>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
       <widget class="OpenGLWidget" name="glPanel" native="true">

@@ -23,8 +23,8 @@ ScriptingWidget::ScriptingWidget(QWidget *parent) :
 	if (completer)
 		completer->setModel(ui->availableObjectsList->model());
 
-	Fort14 *test = new Fort14(this);
-	AddScriptableObject(test);
+//	Fort14 *test = new Fort14(this);
+//	AddScriptableObject(test);
 }
 
 ScriptingWidget::~ScriptingWidget()
@@ -44,6 +44,13 @@ void ScriptingWidget::AddScriptableObject(QObject *newObject)
 	QTreeWidgetItem *top = new QTreeWidgetItem(ui->availableObjectsList);
 	top->setText(0, newObject->objectName());
 	top->setText(1, mo->className());
+
+	for (int i=mo->propertyOffset(); i<mo->propertyCount(); ++i)
+	{
+		QTreeWidgetItem *property = new QTreeWidgetItem(top);
+		property->setText(0, mo->property(i).name());
+		property->setText(1, mo->property(i).typeName());
+	}
 
 	for (int i=mo->methodOffset(); i<mo->methodCount(); ++i)
 	{

@@ -4,15 +4,28 @@ Fort14::Fort14(QObject *parent) :
 	QObject(parent)
 {
 	setObjectName("fort14");
+
+	_gridID = "None";
+	_numNodes = 10;
+	_numElements = 5;
 }
 
-
-int Fort14::numNodes()
+QString Fort14::getGridID()
 {
-	return 50;
+	return _gridID;
 }
 
-int Fort14::numElements()
+int Fort14::getNumNodes()
 {
-	return 100;
+	return _numNodes;
+}
+
+int Fort14::getNumElements()
+{
+	return _numElements;
+}
+
+void Fort14::setGridID(QString newID)
+{
+	_gridID = newID;
 }

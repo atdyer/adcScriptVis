@@ -21,7 +21,10 @@ SOURCES += main.cpp\
     Widgets/Navigator/FileSystemViewer.cpp \
     Adcirc/Fort14.cpp \
     Scripting/ScriptingCompleter.cpp \
-    Scripting/ScriptingConsole.cpp
+    Scripting/ScriptingConsole.cpp \
+    Adcirc/IO/Fort14IO.cpp \
+    Adcirc/Data/Node.cpp \
+    Adcirc/Data/Element.cpp
 
 HEADERS  += MainWindow.h \
     Scripting/ScriptingWidget.h \
@@ -31,7 +34,11 @@ HEADERS  += MainWindow.h \
     Adcirc/Fort14.h \
     Scripting/ScriptingCompleter.h \
     Scripting/ScriptingFunctions.h \
-    Scripting/ScriptingConsole.h
+    Scripting/ScriptingConsole.h \
+    Adcirc/IO/Fort14IO.h \
+    Adcirc/Data/Node.h \
+    Adcirc/Data/AdcircData.h \
+    Adcirc/Data/Element.h
 
 FORMS    += MainWindow.ui \
     Scripting/ScriptingWidget.ui

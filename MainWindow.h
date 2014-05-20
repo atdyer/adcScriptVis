@@ -3,6 +3,11 @@
 
 #include <QMainWindow>
 #include <QSettings>
+#include <QThreadPool>
+#include <QModelIndex>
+
+#include "Adcirc/Fort14.h"
+#include "Adcirc/IO/Fort14IO.h"
 
 namespace Ui {
 	class MainWindow;
@@ -26,7 +31,10 @@ class MainWindow : public QMainWindow
 
 	protected slots:
 
+		void	fort14Loaded(Fort14 *newFort14);
 		void	setFullScreen(bool fs);
+		void	treeDoubleClicked(QModelIndex index);
+
 };
 
 #endif // MAINWINDOW_H
