@@ -1,7 +1,0 @@
-<RCC>
-    <qresource prefix="/icons">
-        <file>icons/open32.png</file>
-        <file>icons/save32.png</file>
-        <file>icons/saveall32.png</file>
-    </qresource>
-</RCC>

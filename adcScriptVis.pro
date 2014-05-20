@@ -18,13 +18,20 @@ SOURCES += main.cpp\
     Scripting/ScriptingWidget.cpp \
     Scripting/ScriptingTextEdit.cpp \
     OpenGL/OpenGLWidget.cpp \
-    Widgets/Navigator/FileSystemViewer.cpp
+    Widgets/Navigator/FileSystemViewer.cpp \
+    Adcirc/Fort14.cpp \
+    Scripting/ScriptingCompleter.cpp \
+    Scripting/ScriptingConsole.cpp
 
 HEADERS  += MainWindow.h \
     Scripting/ScriptingWidget.h \
     Scripting/ScriptingTextEdit.h \
     OpenGL/OpenGLWidget.h \
-    Widgets/Navigator/FileSystemViewer.h
+    Widgets/Navigator/FileSystemViewer.h \
+    Adcirc/Fort14.h \
+    Scripting/ScriptingCompleter.h \
+    Scripting/ScriptingFunctions.h \
+    Scripting/ScriptingConsole.h
 
 FORMS    += MainWindow.ui \
     Scripting/ScriptingWidget.ui
