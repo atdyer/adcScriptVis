@@ -24,7 +24,13 @@ SOURCES += main.cpp\
     Scripting/ScriptingConsole.cpp \
     Adcirc/IO/Fort14IO.cpp \
     Adcirc/Data/Node.cpp \
-    Adcirc/Data/Element.cpp
+    Adcirc/Data/Element.cpp \
+    OpenGL/Shaders/GLShader.cpp \
+    OpenGL/Cameras/GLCamera.cpp \
+    Layers/Layer.cpp \
+    Layers/LayerStack.cpp \
+    OpenGL/Cameras/GLCamera2D.cpp \
+    Layers/MeshLayer.cpp
 
 HEADERS  += MainWindow.h \
     Scripting/ScriptingWidget.h \
@@ -38,7 +44,14 @@ HEADERS  += MainWindow.h \
     Adcirc/IO/Fort14IO.h \
     Adcirc/Data/Node.h \
     Adcirc/Data/AdcircData.h \
-    Adcirc/Data/Element.h
+    Adcirc/Data/Element.h \
+    OpenGL/Shaders/GLShader.h \
+    OpenGL/OpenGLData.h \
+    OpenGL/Cameras/GLCamera.h \
+    Layers/Layer.h \
+    Layers/LayerStack.h \
+    OpenGL/Cameras/GLCamera2D.h \
+    Layers/MeshLayer.h
 
 FORMS    += MainWindow.ui \
     Scripting/ScriptingWidget.ui

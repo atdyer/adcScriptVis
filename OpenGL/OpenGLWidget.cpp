@@ -3,6 +3,8 @@
 OpenGLWidget::OpenGLWidget(QWidget *parent) :
 	QGLWidget(parent)
 {
+	currentLayerStack = 0;
+	setMouseTracking(false);
 }
 
 
@@ -43,4 +45,18 @@ void OpenGLWidget::paintGL()
 	glVertex3f(.5, -.5, 0);
 	glVertex3f(0, .5, 0);
 	glEnd();
+}
+
+
+void OpenGLWidget::mouseMoveEvent(QMouseEvent *e)
+{
+	if (currentLayerStack)
+		currentLayerStack->mouseMoveEvent(e);
+}
+
+
+void OpenGLWidget::wheelEvent(QWheelEvent *e)
+{
+	if (currentLayerStack)
+		currentLayerStack->wheelEvent(e);
 }

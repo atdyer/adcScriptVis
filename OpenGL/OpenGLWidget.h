@@ -1,9 +1,8 @@
 #ifndef OPENGLWIDGET_H
 #define OPENGLWIDGET_H
 
-#include <GL/glew.h>
-#include <GL/glut.h>
-#include <QGLWidget>
+#include "OpenGL/OpenGLData.h"
+#include "Layers/LayerStack.h"
 #include <QtDebug>
 
 class OpenGLWidget : public QGLWidget
@@ -15,6 +14,15 @@ class OpenGLWidget : public QGLWidget
 		void	initializeGL();
 		void	resizeGL(int w, int h);
 		void	paintGL();
+
+	protected:
+
+		void	mouseMoveEvent(QMouseEvent *e);
+		void	wheelEvent(QWheelEvent *e);
+
+	private:
+
+		LayerStack	*currentLayerStack;
 
 	signals:
 
