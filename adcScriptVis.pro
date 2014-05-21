@@ -11,7 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = adcScriptVis
 TEMPLATE = app
 
-LIBS += -lGLEW -lGLU -lGL
+DEFINES += GLEW_STATIC
 
 SOURCES += main.cpp\
         MainWindow.cpp \
@@ -30,7 +30,8 @@ SOURCES += main.cpp\
     Layers/Layer.cpp \
     Layers/LayerStack.cpp \
     OpenGL/Cameras/GLCamera2D.cpp \
-    Layers/MeshLayer.cpp
+    Layers/MeshLayer.cpp \
+    OpenGL/GLEW/glew.c
 
 HEADERS  += MainWindow.h \
     Scripting/ScriptingWidget.h \
@@ -51,7 +52,10 @@ HEADERS  += MainWindow.h \
     Layers/Layer.h \
     Layers/LayerStack.h \
     OpenGL/Cameras/GLCamera2D.h \
-    Layers/MeshLayer.h
+    Layers/MeshLayer.h \
+    OpenGL/GLEW/glew.h \
+    OpenGL/GLEW/glxew.h \
+    OpenGL/GLEW/wglew.h
 
 FORMS    += MainWindow.ui \
     Scripting/ScriptingWidget.ui
