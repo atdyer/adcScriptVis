@@ -1,15 +1,12 @@
 #ifndef LAYER_H
 #define LAYER_H
 
-#include <QObject>
-
 #include "OpenGL/Cameras/GLCamera.h"
 
-class Layer : public QObject
+class Layer
 {
-		Q_OBJECT
 	public:
-		explicit Layer(QObject *parent = 0);
+		explicit Layer();
 
 		virtual void	render() = 0;
 		virtual void	setCamera(GLCamera *newCamera);
@@ -17,10 +14,6 @@ class Layer : public QObject
 	protected:
 
 		GLCamera	*camera;
-
-	signals:
-
-	public slots:
 
 };
 

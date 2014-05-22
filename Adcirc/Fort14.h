@@ -18,9 +18,11 @@ class Fort14 : public QObject
 	public:
 		explicit Fort14(QObject *parent = 0);
 
-		QString	getGridID();
-		int	getNumNodes();
-		int	getNumElements();
+		QVector<Element>	*getElements();
+		QString			getGridID();
+		QVector<Node>		*getNodes();
+		int			getNumNodes();
+		int			getNumElements();
 
 		void	setGridID(QString newID);
 

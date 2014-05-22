@@ -8,6 +8,8 @@
 
 #include "Adcirc/Fort14.h"
 #include "Adcirc/IO/Fort14IO.h"
+#include "Layers/LayerStack.h"
+#include "Layers/MeshLayer.h"
 
 namespace Ui {
 	class MainWindow;

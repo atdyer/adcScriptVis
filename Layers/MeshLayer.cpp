@@ -1,6 +1,8 @@
 #include "MeshLayer.h"
 
-MeshLayer::MeshLayer()
+MeshLayer::MeshLayer(QObject *parent) :
+	QObject(parent),
+	Layer()
 {
 	glLoaded = false;
 	numVertices = 0;

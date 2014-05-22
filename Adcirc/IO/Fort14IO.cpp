@@ -35,7 +35,7 @@ void Fort14IO::run()
 
 	// Set up progress bar variables
 	int currProgress = 0;
-	int maxProgress = fort14->_numNodes + fort14->_numElements;
+	int maxProgress = 2*fort14->_numNodes + fort14->_numElements;
 	int onePercent = 0.01 * maxProgress;
 	if (progressBar)
 	{
@@ -45,6 +45,10 @@ void Fort14IO::run()
 	}
 
 	// Read the nodes
+	float minX = 99999.0;
+	float maxX = -99999.0;
+	float minY = 99999.0;
+	float maxY = -99999.0;
 	fort14->nodes.reserve(fort14->_numNodes);
 	for (int i=0; i<fort14->_numNodes; ++i)
 	{
@@ -55,6 +59,15 @@ void Fort14IO::run()
 		fileStream >> currNode.z;
 		fileStream.readLine();
 
+		if (currNode.x > maxX)
+			maxX = currNode.x;
+		else if (currNode.x < minX)
+			minX = currNode.x;
+		if (currNode.y > maxY)
+			maxY = currNode.y;
+		else if (currNode.y < minY)
+			minY = currNode.y;
+
 		fort14->nodes.append(currNode);
 
 		++currProgress;
@@ -62,6 +75,19 @@ void Fort14IO::run()
 			emit progress(currProgress);
 	}
 	fort14->nodes.squeeze();
+
+	// Normalize the nodes
+	float midX = minX + (maxX - minX) / 2.0;
+	float midY = minY + (maxY - minY) / 2.0;
+	float max = qMax(maxX-minX, maxY-minY);
+	for (int i=0; i<fort14->_numNodes; ++i)
+	{
+		fort14->nodes[i].x = (fort14->nodes[i].x - midX) / max;
+		fort14->nodes[i].y = (fort14->nodes[i].y - midY) / max;
+		++currProgress;
+		if (currProgress % onePercent == 0)
+			emit progress(currProgress);
+	}
 
 	// Read the elements
 	fort14->elements.reserve(fort14->_numElements);

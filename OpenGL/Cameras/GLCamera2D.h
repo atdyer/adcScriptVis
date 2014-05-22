@@ -26,8 +26,8 @@ class GLCamera2D : public QObject, public GLCamera
 		int	width;
 		int	height;
 		float	pixelToViewRatio;
-		int	dx;
-		int	dy;
+		float	dx;
+		float	dy;
 		int	newX;
 		int	newY;
 		int	oldX;

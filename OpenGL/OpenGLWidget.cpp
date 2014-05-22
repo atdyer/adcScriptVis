@@ -26,9 +26,9 @@ void OpenGLWidget::initializeGL()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glPointSize(10);
 	glEnable(GL_POINT_SMOOTH);
-	glEnable(GL_LINE_SMOOTH);
+//	glEnable(GL_LINE_SMOOTH);
 
-	InitializeTestMesh();
+//	InitializeTestMesh();
 }
 
 
@@ -45,6 +45,19 @@ void OpenGLWidget::paintGL()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	if (currentLayerStack)
 		currentLayerStack->render();
+}
+
+
+void OpenGLWidget::setCurrentLayerStack(LayerStack *newStack)
+{
+	if (currentLayerStack)
+		disconnect(currentLayerStack, 0, this, 0);
+
+	currentLayerStack = newStack;
+	currentLayerStack->setViewportSize(geometry().width(), geometry().height());
+	connect(currentLayerStack, SIGNAL(updateGL()), this, SLOT(updateGL()));
+
+	updateGL();
 }
 
 

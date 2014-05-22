@@ -10,8 +10,8 @@ GLCamera2D::GLCamera2D(QObject *parent) :
 
 	pixelToViewRatio = 1.0;
 
-	dx = 0;
-	dy = 0;
+	dx = 0.0;
+	dy = 0.0;
 	newX = 0;
 	newY = 0;
 	oldX = 0;
@@ -26,8 +26,8 @@ const float *GLCamera2D::getMVP()
 {
 	MVPMatrix.setToIdentity();
 	MVPMatrix.ortho(-1.0*width/height, 1.0*width/height, -1.0, 1.0, -1000000.0, 1000000.0);
-	MVPMatrix.translate(pixelToViewRatio*dx, pixelToViewRatio*dy);
 	MVPMatrix.scale(zoom);
+	MVPMatrix.translate(dx, dy);
 	return MVPMatrix.data();
 }
 
@@ -39,8 +39,8 @@ void GLCamera2D::mouseMoveEvent(QMouseEvent *e)
 		newX = e->x();
 		newY = e->y();
 
-		dx += (newX - oldX);
-		dy -= (newY - oldY);
+		dx += pixelToViewRatio*(newX - oldX)/zoom;
+		dy -= pixelToViewRatio*(newY - oldY)/zoom;
 
 		oldX = newX;
 		oldY = newY;

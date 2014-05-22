@@ -74,6 +74,26 @@ void MainWindow::fort14Loaded(Fort14 *newFort14)
 {
 	newFort14->setParent(this);
 	ui->scriptingWidget->AddScriptableObject(newFort14);
+
+	/////////////// TESTING /////////////////////
+	LayerStack *testStack = new LayerStack(this);
+	MeshLayer *testMesh = new MeshLayer(this);
+	SolidShader *outlineShader = new SolidShader(this);
+	SolidShader *fillShader = new SolidShader(this);
+
+	QColor outlineColor (0.2*255, 0.2*255, 0.2*255, 0.1*255);
+	QColor fillColor (Qt::green);
+	outlineShader->setColor(outlineColor);
+	fillShader->setColor(fillColor);
+
+	testMesh->setVertices(newFort14->getNodes());
+	testMesh->setIndices(newFort14->getElements());
+	testMesh->setOutlineShader(outlineShader);
+	testMesh->setFillShader(fillShader);
+
+	testStack->appendLayer(testMesh);
+
+	ui->glPanel->setCurrentLayerStack(testStack);
 }
 
 

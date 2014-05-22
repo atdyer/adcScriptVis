@@ -1,16 +1,19 @@
 #ifndef MESHLAYER_H
 #define MESHLAYER_H
 
+#include <QObject>
+
 #include "Adcirc/Data/AdcircData.h"
 #include "Layers/Layer.h"
 #include "OpenGL/OpenGLData.h"
 #include "OpenGL/Cameras/GLCamera.h"
 #include "OpenGL/Shaders/GLShader.h"
 
-class MeshLayer : public Layer
+class MeshLayer : public QObject, public Layer
 {
+		Q_OBJECT
 	public:
-		MeshLayer();
+		explicit MeshLayer(QObject *parent = 0);
 		~MeshLayer();
 
 		virtual void	render();

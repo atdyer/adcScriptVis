@@ -10,9 +10,19 @@ Fort14::Fort14(QObject *parent) :
 	_numElements = 5;
 }
 
+QVector<Element> *Fort14::getElements()
+{
+	return &elements;
+}
+
 QString Fort14::getGridID()
 {
 	return _gridID;
+}
+
+QVector<Node> *Fort14::getNodes()
+{
+	return &nodes;
 }
 
 int Fort14::getNumNodes()

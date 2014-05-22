@@ -16,6 +16,7 @@ class OpenGLWidget : public QGLWidget
 		void	initializeGL();
 		void	resizeGL(int w, int h);
 		void	paintGL();
+		void	setCurrentLayerStack(LayerStack *newStack);
 
 	protected:
 
