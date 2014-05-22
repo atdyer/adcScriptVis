@@ -5,9 +5,15 @@ MeshLayer::MeshLayer()
 	glLoaded = false;
 	numVertices = 0;
 	numIndices = 0;
+
+	outlineShader = 0;
+	fillShader = 0;
+
 	VAOId = 0;
 	VBOId = 0;
 	IBOId = 0;
+
+	initializeGL();
 }
 
 
@@ -26,8 +32,43 @@ void MeshLayer::render()
 {
 	if (glLoaded && numVertices && numIndices)
 	{
+		glBindVertexArray(VAOId);
+
+		if (fillShader)
+		{
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			if (fillShader->use())
+			{
+				glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, (GLvoid*)0);
+			}
+		}
+
+		if (outlineShader)
+		{
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			if (outlineShader->use())
+			{
+				glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, (GLvoid*)0);
+			}
+		}
 
 	}
+}
+
+
+void MeshLayer::setCamera(GLCamera *newCamera)
+{
+	camera = newCamera;
+	if (outlineShader)
+		outlineShader->setCamera(camera);
+	if (fillShader)
+		fillShader->setCamera(camera);
+}
+
+
+void MeshLayer::setFillShader(GLShader *newFillShader)
+{
+	fillShader = newFillShader;
 }
 
 
@@ -92,6 +133,12 @@ void MeshLayer::setIndices(QVector<int> *indices)
 	} else {
 		qDebug() << "Mesh Layer: Unable to set indices, GL not initialized";
 	}
+}
+
+
+void MeshLayer::setOutlineShader(GLShader *newOutlineShader)
+{
+	outlineShader = newOutlineShader;
 }
 
 

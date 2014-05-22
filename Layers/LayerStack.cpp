@@ -9,19 +9,31 @@ LayerStack::LayerStack(QObject *parent) :
 
 void LayerStack::appendLayer(Layer *layer)
 {
-	layers.append(layer);
+	if (layer)
+	{
+		layer->setCamera(camera);
+		layers.append(layer);
+	}
 }
 
 
 void LayerStack::insertLayer(int i, Layer *layer)
 {
-	layers.insert(i, layer);
+	if (layer)
+	{
+		layer->setCamera(camera);
+		layers.insert(i, layer);
+	}
 }
 
 
 void LayerStack::prependLayer(Layer *layer)
 {
-	layers.prepend(layer);
+	if (layer)
+	{
+		layer->setCamera(camera);
+		layers.prepend(layer);
+	}
 }
 
 
@@ -39,10 +51,35 @@ void LayerStack::render()
 }
 
 
+void LayerStack::setViewportSize(int w, int h)
+{
+	if (camera)
+		camera->setViewportSize(w, h);
+	emit updateGL();
+}
+
+
 void LayerStack::mouseMoveEvent(QMouseEvent *e)
 {
 	if (camera)
 		camera->mouseMoveEvent(e);
+	emit updateGL();
+}
+
+
+void LayerStack::mousePressEvent(QMouseEvent *e)
+{
+	if (camera)
+		camera->mousePressEvent(e);
+	emit updateGL();
+}
+
+
+void LayerStack::mouseReleaseEvent(QMouseEvent *e)
+{
+	if (camera)
+		camera->mouseReleaseEvent(e);
+	emit updateGL();
 }
 
 
@@ -50,4 +87,5 @@ void LayerStack::wheelEvent(QWheelEvent *e)
 {
 	if (camera)
 		camera->wheelEvent(e);
+	emit updateGL();
 }

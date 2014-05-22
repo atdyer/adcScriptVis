@@ -15,8 +15,11 @@ class MeshLayer : public Layer
 
 		virtual void	render();
 
+		virtual void	setCamera(GLCamera *newCamera);
+		void		setFillShader(GLShader *newFillShader);
 		void		setIndices(QVector<Element> *elements);
 		void		setIndices(QVector<int> *indices);
+		void		setOutlineShader(GLShader *newOutlineShader);
 		void		setVertices(QVector<Node> *nodes);
 		void		setVertices(QVector<float> *vertices);
 

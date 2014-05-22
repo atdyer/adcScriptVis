@@ -1,10 +1,9 @@
 #include "GLShader.h"
 
-GLShader::GLShader(QObject *parent) :
-	QObject(parent)
+GLShader::GLShader()
 {
 	programID = 0;
-//	camera = 0;
+	camera = 0;
 	loaded = false;
 	camSet = false;
 	uniformsSet = false;
@@ -21,9 +20,9 @@ GLShader::~GLShader()
 }
 
 
-bool GLShader::Use()
+bool GLShader::use()
 {
-	UpdateCameraUniform();
+	updateCameraUniform();
 	if (uniformsSet)
 	{
 		glUseProgram(programID);
@@ -33,18 +32,29 @@ bool GLShader::Use()
 }
 
 
-void GLShader::UpdateCameraUniform()
+void GLShader::setCamera(GLCamera *newCamera)
+{
+	if (newCamera)
+	{
+		camera = newCamera;
+		camSet = true;
+		updateUniforms();
+	}
+}
+
+
+void GLShader::updateCameraUniform()
 {
 	if (loaded && camSet)
 	{
 		glUseProgram(programID);
 		GLint MVPUniform = glGetUniformLocation(programID, "MVPMatrix");
-//		glUniformMatrix4fv(MVPUniform, 1, GL_FALSE, camera->MVPMatrix.m);
+		glUniformMatrix4fv(MVPUniform, 1, GL_FALSE, camera->getMVP());
 	}
 }
 
 
-GLuint GLShader::CompileShaderPart(const char *source, GLenum shaderType)
+GLuint GLShader::compileShaderPart(const char *source, GLenum shaderType)
 {
 	GLuint shaderID = glCreateShader(shaderType);
 

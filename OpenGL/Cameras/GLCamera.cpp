@@ -1,14 +1,12 @@
 #include "GLCamera.h"
 
-GLCamera::GLCamera(QObject *parent) :
-	QObject(parent)
+GLCamera::GLCamera()
 {
-	ModelViewMatrix.setToIdentity();
-	ProjectionMatrix.setToIdentity();
+	MVPMatrix.setToIdentity();
 }
 
 
 const float *GLCamera::getMVP()
 {
-	return (ProjectionMatrix*ModelViewMatrix).data();
+	return MVPMatrix.data();
 }

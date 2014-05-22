@@ -12,7 +12,7 @@ class Layer : public QObject
 		explicit Layer(QObject *parent = 0);
 
 		virtual void	render() = 0;
-		void		setCamera(GLCamera *newCamera);
+		virtual void	setCamera(GLCamera *newCamera);
 
 	protected:
 

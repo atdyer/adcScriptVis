@@ -1,40 +1,32 @@
 #ifndef GLSHADER_H
 #define GLSHADER_H
 
-#include <QObject>
 #include <QDebug>
+
 #include "OpenGL/OpenGLData.h"
+#include "OpenGL/Cameras/GLCamera.h"
 
-enum ShaderType {NoShaderType, SolidShaderType, GradientShaderType};
-
-class GLShader : public QObject
+class GLShader
 {
-		Q_OBJECT
 	public:
-		explicit GLShader(QObject *parent = 0);
-		virtual ~GLShader();
+		explicit GLShader();
+		~GLShader();
 
-		bool	Use();
-//		void	SetCamera(GLCamera *newCamera);
-
-		virtual	ShaderType	GetShaderType() = 0;
+		bool	use();
+		void	setCamera(GLCamera *newCamera);
 
 	protected:
 
 		GLuint		programID;
-//		GLCamera	*camera;
+		GLCamera	*camera;
 		bool		camSet;
 		bool		loaded;
 		bool		uniformsSet;
 
-		virtual void	UpdateCameraUniform();
-		GLuint		CompileShaderPart(const char *source, GLenum shaderType);
-		virtual void	CompileShader() = 0;
-		virtual void	UpdateUniforms() = 0;
-
-	signals:
-
-	public slots:
+		virtual void	updateCameraUniform();
+		GLuint		compileShaderPart(const char *source, GLenum shaderType);
+		virtual void	compileShader() = 0;
+		virtual void	updateUniforms() = 0;
 
 };
 

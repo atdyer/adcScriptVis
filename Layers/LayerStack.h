@@ -21,7 +21,10 @@ class LayerStack : public QObject
 		void	removeLayer(int i);
 		void	render();
 
+		void	setViewportSize(int w, int h);
 		void	mouseMoveEvent(QMouseEvent *e);
+		void	mousePressEvent(QMouseEvent *e);
+		void	mouseReleaseEvent(QMouseEvent *e);
 		void	wheelEvent(QWheelEvent *e);
 
 
@@ -31,6 +34,8 @@ class LayerStack : public QObject
 		QList<Layer*>	layers;
 
 	signals:
+
+		void	updateGL();
 
 	public slots:
 

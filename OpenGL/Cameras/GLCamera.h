@@ -1,30 +1,27 @@
 #ifndef GLCAMERA_H
 #define GLCAMERA_H
 
-#include <QObject>
 #include <QMatrix4x4>
 #include <QMouseEvent>
 #include <QWheelEvent>
 
-class GLCamera : public QObject
+class GLCamera
 {
-		Q_OBJECT
 	public:
-		explicit GLCamera(QObject *parent = 0);
+		GLCamera();
 
-		const float	*getMVP();
+		virtual const float	*getMVP();
 
 		virtual void	mouseMoveEvent(QMouseEvent *e) = 0;
+		virtual void	mousePressEvent(QMouseEvent *e) = 0;
+		virtual void	mouseReleaseEvent(QMouseEvent *e) = 0;
+		virtual void	reset() = 0;
+		virtual void	setViewportSize(int w, int h) = 0;
 		virtual void	wheelEvent(QWheelEvent *e) = 0;
 
 	protected:
 
-		QMatrix4x4	ModelViewMatrix;
-		QMatrix4x4	ProjectionMatrix;
-
-	signals:
-
-	public slots:
+		QMatrix4x4	MVPMatrix;
 
 };
 

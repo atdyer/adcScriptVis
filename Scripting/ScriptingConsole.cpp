@@ -15,8 +15,6 @@ ScriptingConsole::ScriptingConsole(QWidget *parent) :
 
 void ScriptingConsole::addScriptableObject(QObject *newObject)
 {
-	const QMetaObject *mo = newObject->metaObject();
-
 	// Add the object to the scripting engine
 	QScriptValue objValue = engine->newQObject(newObject);
 	engine->globalObject().setProperty(newObject->objectName(), objValue);
