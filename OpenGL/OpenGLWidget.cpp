@@ -21,11 +21,16 @@ void OpenGLWidget::initializeGL()
 	}
 
 	glClearColor(0.1, 0.1, 0.1, 1.0);
-	glDisable(GL_DEPTH_TEST);
+
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
+	glEnable(GL_POLYGON_OFFSET_FILL);
+	glPolygonOffset(0.0, 0.1);
+
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glPointSize(10);
-	glEnable(GL_POINT_SMOOTH);
+//	glEnable(GL_POINT_SMOOTH);
 //	glEnable(GL_LINE_SMOOTH);
 
 }

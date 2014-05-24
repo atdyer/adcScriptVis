@@ -7,6 +7,7 @@
 
 #include "OpenGL/Cameras/GLCamera.h"
 #include "OpenGL/Cameras/GLCamera2D.h"
+#include "OpenGL/Cameras/GLCamera3D.h"
 #include "Layers/Layer.h"
 
 class LayerStack : public QObject

@@ -25,7 +25,7 @@ GradientShader::GradientShader(QObject *parent) :
 		       "		float t = clamp((in_Position.z - values[i-1]) / (values[i]-values[i-1]), 0.0, 1.0);"
 		       "		ex_Color = mix(ex_Color, colors[i], t*t*(3.0 - 2.0*t));"
 		       "	}"
-		       "	gl_Position = MVPMatrix*in_Position;"
+		       "	gl_Position = MVPMatrix*(in_Position*vec4(1.0, 1.0, 0.1, 1.0));"
 		       "}";
 
 	fragmentSource = "#version 110"

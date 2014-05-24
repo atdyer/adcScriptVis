@@ -81,10 +81,12 @@ void Fort14IO::run()
 	float midX = minX + (maxX - minX) / 2.0;
 	float midY = minY + (maxY - minY) / 2.0;
 	float max = qMax(maxX-minX, maxY-minY);
+	float diffZ = maxZ - minZ;
 	for (int i=0; i<fort14->_numNodes; ++i)
 	{
 		fort14->nodes[i].x = (fort14->nodes[i].x - midX) / max;
 		fort14->nodes[i].y = (fort14->nodes[i].y - midY) / max;
+		fort14->nodes[i].z = (fort14->nodes[i].z) / diffZ;
 		++currProgress;
 		if (currProgress % onePercent == 0)
 			emit progress(currProgress);

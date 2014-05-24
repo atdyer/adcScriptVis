@@ -12,7 +12,7 @@ SolidShader::SolidShader(QObject *parent) :
 			"uniform vec4 ColorVector;"
 			"void main(void)"
 			"{"
-			"       gl_Position = MVPMatrix*in_Position;"
+			"       gl_Position = MVPMatrix*(in_Position*vec4(1.0, 1.0, 0.1, 1.0));"
 			"       ex_Color = ColorVector;"
 			"}";
 

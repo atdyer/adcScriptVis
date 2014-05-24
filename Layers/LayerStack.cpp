@@ -3,7 +3,7 @@
 LayerStack::LayerStack(QObject *parent) :
 	QObject(parent)
 {
-	camera = new GLCamera2D(this);
+	camera = new GLCamera3D(this);
 }
 
 
