@@ -20,7 +20,7 @@ QFileSystemModel *FileSystemViewer::fileSystemModel()
 void FileSystemViewer::createModel()
 {
 	model = new QFileSystemModel(this);
-	model->setRootPath("/home/tristan/Adcirc/");
+	model->setRootPath("C:/Users/Tristan/ADCIRC/");
 }
 
 
@@ -40,7 +40,7 @@ void FileSystemViewer::createFileFilters()
 void FileSystemViewer::connectModel()
 {
 	setModel(model);
-	setRootIndex(model->index("/home/tristan/Adcirc"));
+	setRootIndex(model->index("C:/Users/Tristan/ADCIRC/"));
 	setSortingEnabled(true);
 	hideColumn(2);
 	sortByColumn(0, Qt::AscendingOrder);

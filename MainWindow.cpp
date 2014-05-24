@@ -113,7 +113,12 @@ void MainWindow::treeDoubleClicked(QModelIndex index)
 		if (info.suffix() == QString("14"))
 		{
 			Fort14 *fort14 = new Fort14();
-			Fort14IO *reader = new Fort14IO(fort14, info.absoluteFilePath(), ui->progressBar);
+			Fort14IO *reader = new Fort14IO(fort14, info.absoluteFilePath());
+
+			connect(reader, SIGNAL(progressStartValue(int)), ui->progressBar, SLOT(setMinimum(int)));
+			connect(reader, SIGNAL(progressEndValue(int)), ui->progressBar, SLOT(setMaximum(int)));
+			connect(reader, SIGNAL(readingInProgress(bool)), ui->progressBar, SLOT(setVisible(bool)));
+			connect(reader, SIGNAL(progress(int)), ui->progressBar, SLOT(setValue(int)));
 			connect(reader, SIGNAL(fort14Loaded(Fort14*)), this, SLOT(fort14Loaded(Fort14*)));
 
 			QThreadPool::globalInstance()->start(reader);

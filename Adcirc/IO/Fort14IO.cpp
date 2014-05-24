@@ -1,15 +1,10 @@
 #include "Fort14IO.h"
 
-Fort14IO::Fort14IO(Fort14 *fort14, QString fileLocation, QProgressBar *progressBar) :
+Fort14IO::Fort14IO(Fort14 *fort14, QString fileLocation) :
 	QObject(0)
 {
 	this->fort14 = fort14;
 	fileLoc = fileLocation;
-	this->progressBar = progressBar;
-
-	if (progressBar)
-		connect(this, SIGNAL(progress(int)), progressBar, SLOT(setValue(int)));
-
 }
 
 Fort14IO::~Fort14IO()
@@ -37,12 +32,9 @@ void Fort14IO::run()
 	int currProgress = 0;
 	int maxProgress = 2*fort14->_numNodes + fort14->_numElements;
 	int onePercent = 0.01 * maxProgress;
-	if (progressBar)
-	{
-		progressBar->setVisible(true);
-		progressBar->setValue(0);
-		progressBar->setMaximum(maxProgress);
-	}
+	emit progressStartValue(0);
+	emit progressEndValue(maxProgress);
+	emit readingInProgress(true);
 
 	// Read the nodes
 	float minX = 99999.0;
@@ -112,9 +104,7 @@ void Fort14IO::run()
 
 	file.close();
 
-	if (progressBar)
-		progressBar->setVisible(false);
-
+	emit readingInProgress(false);
 	emit fort14Loaded(fort14);
 }
 
