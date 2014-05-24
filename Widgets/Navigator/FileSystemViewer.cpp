@@ -4,6 +4,7 @@ FileSystemViewer::FileSystemViewer(QWidget *parent) :
 	QTreeView(parent)
 {
 	header()->setStretchLastSection(false);
+	header()->setSectionsMovable(true);
 
 	createModel();
 	createFileFilters();
@@ -20,7 +21,7 @@ QFileSystemModel *FileSystemViewer::fileSystemModel()
 void FileSystemViewer::createModel()
 {
 	model = new QFileSystemModel(this);
-	model->setRootPath("C:/Users/Tristan/ADCIRC/");
+	model->setRootPath("/home/tristan/adcircDomains/");
 }
 
 
@@ -40,7 +41,7 @@ void FileSystemViewer::createFileFilters()
 void FileSystemViewer::connectModel()
 {
 	setModel(model);
-	setRootIndex(model->index("C:/Users/Tristan/ADCIRC/"));
+	setRootIndex(model->index("/home/tristan/adcircDomains/"));
 	setSortingEnabled(true);
 	hideColumn(2);
 	sortByColumn(0, Qt::AscendingOrder);

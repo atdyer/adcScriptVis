@@ -140,11 +140,18 @@ QDockWidget::title  {
         <item>
          <widget class="FileSystemViewer" name="treeView">
           <property name="styleSheet">
-           <string notr="true">alternate-background-color: #3A3939;
-color: silver;
-border: 1px solid #3A3939;
-border-radius: 3px;
-padding: 1px;</string>
+           <string notr="true">QHeaderView {
+	alternate-background-color: #3A3939;
+	color: silver;
+	border: 1px solid #3A3939;
+	padding: 1px;
+}
+
+QHeaderView::section {
+	text-align: center;
+	min-height: 20px;
+}
+</string>
           </property>
          </widget>
         </item>
@@ -193,7 +200,7 @@ padding: 1px;</string>
      <x>0</x>
      <y>0</y>
      <width>1081</width>
-     <height>20</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

@@ -7,6 +7,7 @@
 #include <QScriptEngine>
 #include <QAbstractItemView>
 #include <QScrollBar>
+#include <QRegularExpression>
 #include <QDebug>
 
 #include "Scripting/ScriptingFunctions.h"

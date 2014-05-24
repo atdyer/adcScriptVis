@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     OpenGL/Cameras/GLCamera2D.cpp \
     Layers/MeshLayer.cpp \
     OpenGL/GLEW/glew.c \
-    OpenGL/Shaders/SolidShader.cpp
+    OpenGL/Shaders/SolidShader.cpp \
+    OpenGL/Shaders/GradientShader.cpp
 
 HEADERS  += MainWindow.h \
     Scripting/ScriptingWidget.h \
@@ -57,7 +58,8 @@ HEADERS  += MainWindow.h \
     OpenGL/GLEW/glew.h \
     OpenGL/GLEW/glxew.h \
     OpenGL/GLEW/wglew.h \
-    OpenGL/Shaders/SolidShader.h
+    OpenGL/Shaders/SolidShader.h \
+    OpenGL/Shaders/GradientShader.h
 
 FORMS    += MainWindow.ui \
     Scripting/ScriptingWidget.ui

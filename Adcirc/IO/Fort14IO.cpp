@@ -41,6 +41,8 @@ void Fort14IO::run()
 	float maxX = -99999.0;
 	float minY = 99999.0;
 	float maxY = -99999.0;
+	float minZ = 99999.0;
+	float maxZ = -99999.0;
 	fort14->nodes.reserve(fort14->_numNodes);
 	for (int i=0; i<fort14->_numNodes; ++i)
 	{
@@ -59,6 +61,11 @@ void Fort14IO::run()
 			maxY = currNode.y;
 		else if (currNode.y < minY)
 			minY = currNode.y;
+		currNode.z *= -1.0;
+		if (currNode.z > maxZ)
+			maxZ = currNode.z;
+		else if (currNode.z < minZ)
+			minZ = currNode.z;
 
 		fort14->nodes.append(currNode);
 
@@ -67,6 +74,8 @@ void Fort14IO::run()
 			emit progress(currProgress);
 	}
 	fort14->nodes.squeeze();
+	fort14->_maxZ = maxZ;
+	fort14->_minZ = minZ;
 
 	// Normalize the nodes
 	float midX = minX + (maxX - minX) / 2.0;

@@ -4,7 +4,7 @@
 #include "OpenGL/OpenGLData.h"
 #include "Layers/LayerStack.h"
 #include "Layers/MeshLayer.h"
-#include "OpenGL/Shaders/SolidShader.h"
+
 #include <QtDebug>
 
 class OpenGLWidget : public QGLWidget
@@ -28,8 +28,6 @@ class OpenGLWidget : public QGLWidget
 	private:
 
 		LayerStack	*currentLayerStack;
-
-		void	InitializeTestMesh();
 
 	signals:
 

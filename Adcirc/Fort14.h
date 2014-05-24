@@ -10,6 +10,8 @@ class Fort14 : public QObject
 {
 		Q_OBJECT
 		Q_PROPERTY(QString gridID READ getGridID WRITE setGridID)
+		Q_PROPERTY(float maxElevation READ getMaxZ)
+		Q_PROPERTY(float minElevation READ getMinZ)
 		Q_PROPERTY(int numNodes READ getNumNodes)
 		Q_PROPERTY(int numElements READ getNumElements)
 
@@ -21,6 +23,8 @@ class Fort14 : public QObject
 		QVector<Element>	*getElements();
 		QString			getGridID();
 		QVector<Node>		*getNodes();
+		float			getMaxZ();
+		float			getMinZ();
 		int			getNumNodes();
 		int			getNumElements();
 
@@ -29,6 +33,8 @@ class Fort14 : public QObject
 	private:
 
 		QString	_gridID;
+		float	_minZ;
+		float	_maxZ;
 		int	_numNodes;
 		int	_numElements;
 

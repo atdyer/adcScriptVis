@@ -79,12 +79,35 @@ void MainWindow::fort14Loaded(Fort14 *newFort14)
 	LayerStack *testStack = new LayerStack(this);
 	MeshLayer *testMesh = new MeshLayer(this);
 	SolidShader *outlineShader = new SolidShader(this);
-	SolidShader *fillShader = new SolidShader(this);
+//	SolidShader *fillShader = new SolidShader(this);
+	GradientShader *fillShader = new GradientShader(this);
 
 	QColor outlineColor (0.2*255, 0.2*255, 0.2*255, 0.1*255);
-	QColor fillColor (Qt::green);
+
+	float minZ = newFort14->getMinZ();
+	float maxZ = newFort14->getMaxZ();
+	QGradientStops stops;
+
+	float percentage;
+	float elevations[] = {minZ, 0.0, 0.5, 1.75, -0.5, maxZ};
+	QColor colors[] = {QColor::fromRgb(0, 0, 255),
+			   QColor::fromRgb(255,255,255),
+			   QColor::fromRgb(0,255,0),
+			   QColor::fromRgb(0,175,0),
+			   QColor::fromRgb(0,255,255),
+			   QColor::fromRgb(0, 100, 0)};
+	for (unsigned int i=0; i<6; ++i)
+	{
+		percentage = (maxZ - elevations[i])/(maxZ-minZ);
+		stops << QGradientStop(percentage, colors[i]);
+	}
+
 	outlineShader->setColor(outlineColor);
-	fillShader->setColor(fillColor);
+	fillShader->setGradientRange(minZ, maxZ);
+	fillShader->setGradientStops(stops);
+
+//	QColor fillColor (Qt::green);
+//	fillShader->setColor(fillColor);
 
 	testMesh->setVertices(newFort14->getNodes());
 	testMesh->setIndices(newFort14->getElements());

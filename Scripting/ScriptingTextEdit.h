@@ -9,6 +9,7 @@
 #include <QStringListModel>
 #include <QFileSystemModel>
 #include <QPainter>
+#include <QRegularExpression>
 #include <QTextBlock>
 #include <QtDebug>
 

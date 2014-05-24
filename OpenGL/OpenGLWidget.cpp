@@ -28,7 +28,6 @@ void OpenGLWidget::initializeGL()
 	glEnable(GL_POINT_SMOOTH);
 //	glEnable(GL_LINE_SMOOTH);
 
-//	InitializeTestMesh();
 }
 
 
@@ -86,47 +85,4 @@ void OpenGLWidget::wheelEvent(QWheelEvent *e)
 {
 	if (currentLayerStack)
 		currentLayerStack->wheelEvent(e);
-}
-
-
-void OpenGLWidget::InitializeTestMesh()
-{
-	currentLayerStack = new LayerStack(this);
-	MeshLayer *testMesh = new MeshLayer();
-
-	QVector<float> vertices;
-	QVector<int> indices;
-
-	vertices.append(-.5);
-	vertices.append(-.5);
-	vertices.append(0.0);
-	vertices.append(1.0);
-	vertices.append(.5);
-	vertices.append(-.5);
-	vertices.append(0.0);
-	vertices.append(1.0);
-	vertices.append(0.0);
-	vertices.append(.5);
-	vertices.append(0.0);
-	vertices.append(1.0);
-
-	indices.append(0);
-	indices.append(1);
-	indices.append(2);
-
-	testMesh->setVertices(&vertices);
-	testMesh->setIndices(&indices);
-
-	SolidShader *testShader = new SolidShader(this);
-	SolidShader *testShader2 = new SolidShader(this);
-	testShader->setColor(QColor(Qt::blue).lighter());
-	testShader2->setColor(QColor(Qt::red));
-
-	testMesh->setOutlineShader(testShader2);
-	testMesh->setFillShader(testShader);
-
-	currentLayerStack->appendLayer(testMesh);
-
-	connect(currentLayerStack, SIGNAL(updateGL()), this, SLOT(updateGL()));
-
 }

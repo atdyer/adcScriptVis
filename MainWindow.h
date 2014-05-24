@@ -10,6 +10,8 @@
 #include "Adcirc/IO/Fort14IO.h"
 #include "Layers/LayerStack.h"
 #include "Layers/MeshLayer.h"
+#include "OpenGL/Shaders/SolidShader.h"
+#include "OpenGL/Shaders/GradientShader.h"
 
 namespace Ui {
 	class MainWindow;

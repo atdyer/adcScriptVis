@@ -2,6 +2,7 @@
 #define SCRIPTINGCOMPLETER_H
 
 #include <QCompleter>
+#include <QStringList>
 
 class ScriptingCompleter : public QCompleter
 {
