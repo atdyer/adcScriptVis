@@ -39,7 +39,7 @@ const float *GLCamera3D::getMVP()
 
 void GLCamera3D::mouseMoveEvent(QMouseEvent *e)
 {
-	if (e->buttons() == Qt::RightButton)
+	if (e->buttons() == Qt::LeftButton)
 	{
 		newX = e->x();
 		newY = e->y();
@@ -53,7 +53,7 @@ void GLCamera3D::mouseMoveEvent(QMouseEvent *e)
 		oldX = newX;
 		oldY = newY;
 	}
-	else if (e->buttons() == Qt::LeftButton)
+	else if (e->buttons() == Qt::RightButton)
 	{
 		newX = e->x();
 		newY = e->y();
@@ -86,9 +86,8 @@ void GLCamera3D::mouseReleaseEvent(QMouseEvent *)
 void GLCamera3D::reset()
 {
 	zoom = 1.0;
-	dx = 0;
-	dy = 0;
-
+	xRot = 0.0;
+	zRot = 0.0;
 }
 
 

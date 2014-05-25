@@ -32,6 +32,10 @@ void MainWindow::connectActions()
 	// Connect tree double-click on file
 	connect(ui->treeView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(treeDoubleClicked(QModelIndex)));
 
+	// Connect camera changes
+	connect(ui->button2D, SIGNAL(clicked()), ui->glPanel, SLOT(use2DCamera()));
+	connect(ui->button3D, SIGNAL(clicked()), ui->glPanel, SLOT(use3DCamera()));
+
 	// Connect the exit action
 	connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
 }
@@ -74,6 +78,8 @@ void MainWindow::fort14Loaded(Fort14 *newFort14)
 {
 	newFort14->setParent(this);
 	ui->scriptingWidget->AddScriptableObject(newFort14);
+	ui->glPanel->setObjectName("displayPanel");
+	ui->scriptingWidget->AddScriptableObject(ui->glPanel);
 
 	/////////////// TESTING /////////////////////
 	LayerStack *testStack = new LayerStack(this);

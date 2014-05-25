@@ -3,7 +3,9 @@
 LayerStack::LayerStack(QObject *parent) :
 	QObject(parent)
 {
-	camera = new GLCamera3D(this);
+	cam2D = new GLCamera2D(this);
+	cam3D = new GLCamera3D(this);
+	camera = cam2D;
 }
 
 
@@ -53,8 +55,10 @@ void LayerStack::render()
 
 void LayerStack::setViewportSize(int w, int h)
 {
-	if (camera)
-		camera->setViewportSize(w, h);
+	if (cam2D)
+		cam2D->setViewportSize(w, h);
+	if (cam3D)
+		cam3D->setViewportSize(w, h);
 	emit updateGL();
 }
 
@@ -87,5 +91,31 @@ void LayerStack::wheelEvent(QWheelEvent *e)
 {
 	if (camera)
 		camera->wheelEvent(e);
+	emit updateGL();
+}
+
+
+void LayerStack::resetCamera()
+{
+	if (camera)
+		camera->reset();
+	emit updateGL();
+}
+
+
+void LayerStack::use2DCamera()
+{
+	camera = cam2D;
+	for (int i=0; i<layers.size(); ++i)
+		layers[i]->setCamera(camera);
+	emit updateGL();
+}
+
+
+void LayerStack::use3DCamera()
+{
+	camera = cam3D;
+	for (int i=0; i<layers.size(); ++i)
+		layers[i]->setCamera(camera);
 	emit updateGL();
 }

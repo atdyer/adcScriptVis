@@ -33,6 +33,10 @@ class OpenGLWidget : public QGLWidget
 
 	public slots:
 
+		void	reset();
+		void	use2DCamera();
+		void	use3DCamera();
+
 };
 
 #endif // OPENGLWIDGET_H

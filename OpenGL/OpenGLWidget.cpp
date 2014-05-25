@@ -91,3 +91,24 @@ void OpenGLWidget::wheelEvent(QWheelEvent *e)
 	if (currentLayerStack)
 		currentLayerStack->wheelEvent(e);
 }
+
+
+void OpenGLWidget::reset()
+{
+	if (currentLayerStack)
+		currentLayerStack->resetCamera();
+}
+
+
+void OpenGLWidget::use2DCamera()
+{
+	if (currentLayerStack)
+		currentLayerStack->use2DCamera();
+}
+
+
+void OpenGLWidget::use3DCamera()
+{
+	if (currentLayerStack)
+		currentLayerStack->use3DCamera();
+}

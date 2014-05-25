@@ -32,6 +32,8 @@ class LayerStack : public QObject
 	private:
 
 		GLCamera	*camera;
+		GLCamera2D	*cam2D;
+		GLCamera3D	*cam3D;
 		QList<Layer*>	layers;
 
 	signals:
@@ -39,6 +41,10 @@ class LayerStack : public QObject
 		void	updateGL();
 
 	public slots:
+
+		void	resetCamera();
+		void	use2DCamera();
+		void	use3DCamera();
 
 };
 
