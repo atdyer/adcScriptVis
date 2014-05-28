@@ -6,8 +6,9 @@
 #include <QThreadPool>
 #include <QModelIndex>
 
+#include "Adcirc/AdcircFileManager.h"
 #include "Adcirc/Fort14.h"
-#include "Adcirc/IO/Fort14IO.h"
+#include "Adcirc/Fort63.h"
 #include "Layers/LayerStack.h"
 #include "Layers/MeshLayer.h"
 #include "OpenGL/Shaders/SolidShader.h"
@@ -27,6 +28,7 @@ class MainWindow : public QMainWindow
 
 	private:
 		Ui::MainWindow *ui;
+		AdcircFileManager	fileManager;
 
 		void	connectActions();
 		void	initializeLayout();
@@ -36,6 +38,7 @@ class MainWindow : public QMainWindow
 	protected slots:
 
 		void	fort14Loaded(Fort14 *newFort14);
+		void	fort63Loaded(Fort63 *newFort63, int ts);
 		void	setFullScreen(bool fs);
 		void	treeDoubleClicked(QModelIndex index);
 

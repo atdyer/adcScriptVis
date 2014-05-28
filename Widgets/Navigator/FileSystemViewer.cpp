@@ -28,7 +28,7 @@ void FileSystemViewer::createModel()
 void FileSystemViewer::createFileFilters()
 {
 	QStringList filters;
-	filters << "*.14";
+	filters << "*.14" << "*.63";
 
 	if (model)
 	{

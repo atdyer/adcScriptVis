@@ -36,31 +36,34 @@ ScriptingWidget::~ScriptingWidget()
 
 void ScriptingWidget::AddScriptableObject(QObject *newObject)
 {
-	const QMetaObject *mo = newObject->metaObject();
-
-	ui->scriptConsole->addScriptableObject(newObject);
-
-	// Add the object to the list of available objects
-	QTreeWidgetItem *top = new QTreeWidgetItem(ui->availableObjectsList);
-	top->setText(0, newObject->objectName());
-	top->setText(1, mo->className());
-
-	for (int i=mo->propertyOffset(); i<mo->propertyCount(); ++i)
+	if (newObject)
 	{
-		QTreeWidgetItem *property = new QTreeWidgetItem(top);
-		property->setText(0, mo->property(i).name());
-		property->setText(1, mo->property(i).typeName());
-	}
+		const QMetaObject *mo = newObject->metaObject();
 
-	for (int i=mo->methodOffset(); i<mo->methodCount(); ++i)
-	{
-		QTreeWidgetItem *method = new QTreeWidgetItem(top);
-		method->setText(0, mo->method(i).methodSignature());
-		method->setText(1, mo->method(i).typeName());
-	}
+		ui->scriptConsole->addScriptableObject(newObject);
 
-	ui->availableObjectsList->expandAll();
-	ui->availableObjectsList->resizeColumnToContents(0);
+		// Add the object to the list of available objects
+		QTreeWidgetItem *top = new QTreeWidgetItem(ui->availableObjectsList);
+		top->setText(0, newObject->objectName());
+		top->setText(1, mo->className());
+
+		for (int i=mo->propertyOffset(); i<mo->propertyCount(); ++i)
+		{
+			QTreeWidgetItem *property = new QTreeWidgetItem(top);
+			property->setText(0, mo->property(i).name());
+			property->setText(1, mo->property(i).typeName());
+		}
+
+		for (int i=mo->methodOffset(); i<mo->methodCount(); ++i)
+		{
+			QTreeWidgetItem *method = new QTreeWidgetItem(top);
+			method->setText(0, mo->method(i).methodSignature());
+			method->setText(1, mo->method(i).typeName());
+		}
+
+		ui->availableObjectsList->expandAll();
+		ui->availableObjectsList->resizeColumnToContents(0);
+	}
 
 }
 

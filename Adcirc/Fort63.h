@@ -19,31 +19,23 @@ class Fort63 : public QObject
 		explicit Fort63(QObject *parent = 0);
 		~Fort63();
 
+		void	setReader(Fort63IO *newReader);
+
 	private:
 
 		QVector<float>	elevations;
+		Fort63IO	*reader;
 
-		QString	_gridID;
-		int	_numDatasets;
-		int	_numNodes;
-		int	_outputInterval;
-		float	_timestepSeconds;
-
-		QThread	workerThread;
-
-
-	signals:
-
-		void	initialized(Fort63*);
-		void	timestepLoaded(int ts);
+		QString		_gridID;
+		int		_numDatasets;
+		int		_numNodes;
+		int		_outputInterval;
+		float		_timestepSeconds;
 
 	public slots:
 
-		void	setPath(QString fileLocation, QProgressBar *progressBar = 0);
+		void	loadTimestep(int ts);
 
-	protected slots:
-
-		void	timestepFinishedReading(int ts);
 
 };
 
