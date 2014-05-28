@@ -2,6 +2,7 @@
 #define GLCAMERA3D_H
 
 #include <QObject>
+#include <QtMath>
 #include <math.h>
 
 #include "OpenGL/OpenGLData.h"
@@ -35,6 +36,7 @@ class GLCamera3D : public QObject, public GLCamera
 		int	oldY;
 		float	panX;
 		float	panY;
+		float	panZ;
 		float	xRot;
 		float	zRot;
 		float	zoom;

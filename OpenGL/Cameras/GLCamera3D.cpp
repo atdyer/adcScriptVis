@@ -16,6 +16,10 @@ GLCamera3D::GLCamera3D(QObject *parent) :
 	oldX = 0;
 	oldY = 0;
 
+	panX = 0.0;
+	panY = 0.0;
+	panZ = 0.0;
+
 	xRot = 0.0;
 	zRot = 0.0;
 
@@ -29,9 +33,9 @@ const float *GLCamera3D::getMVP()
 	MVPMatrix.setToIdentity();
 	MVPMatrix.ortho(-1.0*width/height, 1.0*width/height, -1.0, 1.0, -1.0*zoom, 1.0*zoom);
 	MVPMatrix.scale(zoom);
-	MVPMatrix.translate(panX, panY);
 	MVPMatrix.rotate(xRot, 1.0, 0.0, 0.0);
 	MVPMatrix.rotate(zRot, 0.0, 0.0, 1.0);
+	MVPMatrix.translate(panX, panY, panZ);
 
 	return MVPMatrix.data();
 }
@@ -47,8 +51,8 @@ void GLCamera3D::mouseMoveEvent(QMouseEvent *e)
 		dx = newX-oldX;
 		dy = newY-oldY;
 
-		zRot += dx;
-		xRot += dy;
+		zRot += dx/6.0;
+		xRot += dy/6.0;
 
 		oldX = newX;
 		oldY = newY;
@@ -61,8 +65,14 @@ void GLCamera3D::mouseMoveEvent(QMouseEvent *e)
 		dx = newX-oldX;
 		dy = newY-oldY;
 
-		panX += pixelToViewRatio*dx/zoom;
-		panY -= pixelToViewRatio*dy/zoom;
+		float rads = qDegreesToRadians(zRot);
+		float c = cos(rads);
+		float s = sin(rads);
+		float scalingRatio = pixelToViewRatio/zoom;
+
+		panX += scalingRatio * (dx*c - dy*s);
+		panY -= scalingRatio * (dx*s + dy*c);
+//		panZ += scalingRatio * dy * sin(qDegreesToRadians(xRot));
 
 		oldX = newX;
 		oldY = newY;
