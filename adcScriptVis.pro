@@ -34,7 +34,9 @@ SOURCES += main.cpp\
     OpenGL/GLEW/glew.c \
     OpenGL/Shaders/SolidShader.cpp \
     OpenGL/Shaders/GradientShader.cpp \
-    OpenGL/Cameras/GLCamera3D.cpp
+    OpenGL/Cameras/GLCamera3D.cpp \
+    Adcirc/Fort63.cpp \
+    Adcirc/IO/Fort63IO.cpp
 
 HEADERS  += MainWindow.h \
     Scripting/ScriptingWidget.h \
@@ -61,7 +63,9 @@ HEADERS  += MainWindow.h \
     OpenGL/GLEW/wglew.h \
     OpenGL/Shaders/SolidShader.h \
     OpenGL/Shaders/GradientShader.h \
-    OpenGL/Cameras/GLCamera3D.h
+    OpenGL/Cameras/GLCamera3D.h \
+    Adcirc/Fort63.h \
+    Adcirc/IO/Fort63IO.h
 
 FORMS    += MainWindow.ui \
     Scripting/ScriptingWidget.ui
