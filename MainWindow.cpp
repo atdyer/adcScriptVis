@@ -96,7 +96,7 @@ void MainWindow::fort14Loaded(Fort14 *newFort14)
 	QGradientStops stops;
 
 	float percentage;
-	float elevations[] = {minZ/zDiff, 0.0/zDiff, 0.5/zDiff, 1.75/zDiff, -0.5/zDiff, maxZ/zDiff};
+	float elevations[] = {minZ/zDiff, 0.0f/zDiff, 0.5f/zDiff, 1.75f/zDiff, -0.5f/zDiff, maxZ/zDiff};
 	QColor colors[] = {QColor::fromRgb(0, 0, 255),
 			   QColor::fromRgb(255,255,255),
 			   QColor::fromRgb(0,255,0),

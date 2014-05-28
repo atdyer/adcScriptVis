@@ -23,11 +23,14 @@ void OpenGLWidget::initializeGL()
 	glClearColor(0.1, 0.1, 0.1, 1.0);
 
 	glEnable(GL_DEPTH_TEST);
+	glDepthMask(GL_TRUE);
 	glDepthFunc(GL_LEQUAL);
+	glDepthRange(0.0f, 1.0f);
 	glEnable(GL_POLYGON_OFFSET_FILL);
-	glPolygonOffset(0.0, 0.1);
+	glPolygonOffset(1.0, 1.0);
 
 	glEnable(GL_BLEND);
+	glEnable(GL_ALPHA_TEST);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glPointSize(10);
 //	glEnable(GL_POINT_SMOOTH);
@@ -46,6 +49,7 @@ void OpenGLWidget::resizeGL(int w, int h)
 
 void OpenGLWidget::paintGL()
 {
+	glClearDepth(1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	if (currentLayerStack)
 		currentLayerStack->render();

@@ -27,7 +27,7 @@ GLCamera3D::GLCamera3D(QObject *parent) :
 const float *GLCamera3D::getMVP()
 {
 	MVPMatrix.setToIdentity();
-	MVPMatrix.ortho(-1.0*width/height, 1.0*width/height, -1.0, 1.0, -1000000.0, 1000000.0);
+	MVPMatrix.ortho(-1.0*width/height, 1.0*width/height, -1.0, 1.0, -1.0*zoom, 1.0*zoom);
 	MVPMatrix.scale(zoom);
 	MVPMatrix.translate(panX, panY);
 	MVPMatrix.rotate(xRot, 1.0, 0.0, 0.0);
