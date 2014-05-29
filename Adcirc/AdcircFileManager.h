@@ -32,7 +32,7 @@ class AdcircFileManager : public QObject
 	signals:
 
 		void	fort14Loaded(Fort14 *fort14);
-		void	fort63Loaded(Fort63 *fort63, int ts);
+		void	fort63Loaded(Fort63 *fort63);
 
 	public slots:
 

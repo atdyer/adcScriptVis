@@ -29,6 +29,11 @@ class LayerStack : public QObject
 		void	wheelEvent(QWheelEvent *e);
 
 
+		GLCamera	*getCurrentCamera();
+		GLCamera2D	*get2DCamera();
+		GLCamera3D	*get3DCamera();
+
+
 	private:
 
 		GLCamera	*camera;

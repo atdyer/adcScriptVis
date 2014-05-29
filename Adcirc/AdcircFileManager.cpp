@@ -63,9 +63,10 @@ void AdcircFileManager::openFort63(QString fileLocation)
 		connect(reader, SIGNAL(progressStartValue(int)), progressBar, SLOT(setMinimum(int)));
 		connect(reader, SIGNAL(progressEndValue(int)), progressBar, SLOT(setMaximum(int)));
 		connect(reader, SIGNAL(readingInProgress(bool)), progressBar, SLOT(setVisible(bool)));
-		connect(reader, SIGNAL(progess(int)), progressBar, SLOT(setValue(int)));
+		connect(reader, SIGNAL(progress(int)), progressBar, SLOT(setValue(int)));
 	}
-	connect(reader, SIGNAL(fort63Loaded(Fort63*,int)), this, SIGNAL(fort63Loaded(Fort63*,int)));
+	connect(reader, SIGNAL(fort63Loaded(Fort63*)), this, SIGNAL(fort63Loaded(Fort63*)));
+	connect(&workerThread, SIGNAL(finished()), reader, SLOT(deleteLater()));
 
 	if (!workerThread.isRunning())
 		workerThread.start();

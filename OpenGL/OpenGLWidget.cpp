@@ -69,6 +69,30 @@ void OpenGLWidget::setCurrentLayerStack(LayerStack *newStack)
 }
 
 
+GLCamera *OpenGLWidget::getCurrentCamera()
+{
+	if (currentLayerStack)
+		return currentLayerStack->getCurrentCamera();
+	return 0;
+}
+
+
+GLCamera2D *OpenGLWidget::getCurrent2DCamera()
+{
+	if (currentLayerStack)
+		return currentLayerStack->get2DCamera();
+	return 0;
+}
+
+
+GLCamera3D *OpenGLWidget::getCurrent3DCamera()
+{
+	if (currentLayerStack)
+		return currentLayerStack->get3DCamera();
+	return 0;
+}
+
+
 void OpenGLWidget::mouseMoveEvent(QMouseEvent *e)
 {
 	if (currentLayerStack)
@@ -97,10 +121,58 @@ void OpenGLWidget::wheelEvent(QWheelEvent *e)
 }
 
 
+void OpenGLWidget::refresh()
+{
+	updateGL();
+}
+
+
 void OpenGLWidget::reset()
 {
 	if (currentLayerStack)
 		currentLayerStack->resetCamera();
+}
+
+
+void OpenGLWidget::panCamera(float dx, float dy)
+{
+	if (currentLayerStack)
+	{
+		GLCamera *currCam = getCurrentCamera();
+		GLCamera3D *curr3D = getCurrent3DCamera();
+		if (currCam != 0 && currCam == curr3D)
+		{
+			curr3D->panCamera(dx, dy);
+		}
+	}
+}
+
+
+void OpenGLWidget::rotateCamera(float degrees)
+{
+	if (currentLayerStack)
+	{
+		GLCamera *currCam = getCurrentCamera();
+		GLCamera3D *curr3D = getCurrent3DCamera();
+		if (currCam != 0 && currCam == curr3D)
+		{
+			curr3D->rotateCamera(degrees);
+		}
+	}
+}
+
+
+void OpenGLWidget::tiltCamera(float degrees)
+{
+	if (currentLayerStack)
+	{
+		GLCamera *currCam = getCurrentCamera();
+		GLCamera3D *curr3D = getCurrent3DCamera();
+		if (currCam != 0 && currCam == curr3D)
+		{
+			curr3D->tiltCamera(degrees);
+		}
+	}
 }
 
 
@@ -115,4 +187,18 @@ void OpenGLWidget::use3DCamera()
 {
 	if (currentLayerStack)
 		currentLayerStack->use3DCamera();
+}
+
+
+void OpenGLWidget::zoomCamera(int direction, float scale)
+{
+	if (currentLayerStack)
+	{
+		GLCamera *currCam = getCurrentCamera();
+		GLCamera3D *curr3D = getCurrent3DCamera();
+		if (currCam != 0 && currCam == curr3D)
+		{
+			curr3D->zoomCamera(direction, scale);
+		}
+	}
 }

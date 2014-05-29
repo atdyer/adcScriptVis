@@ -7,11 +7,16 @@
 #include <QThread>
 
 #include "Adcirc/Data/AdcircData.h"
-#include "Adcirc/IO/Fort63IO.h"
 
+class Fort63IO;
 class Fort63 : public QObject
 {
 		Q_OBJECT
+		Q_PROPERTY(QString gridID READ getGridID WRITE setGridID)
+		Q_PROPERTY(int numDatasets READ getNumDatasets)
+		Q_PROPERTY(int numNodes READ getNumNodes)
+		Q_PROPERTY(int outputInterval READ getOutputInterval)
+		Q_PROPERTY(float timestepInSeconds READ getTimestepInSeconds)
 
 		friend class Fort63IO;
 
@@ -19,10 +24,18 @@ class Fort63 : public QObject
 		explicit Fort63(QObject *parent = 0);
 		~Fort63();
 
+		QString	getGridID();
+		int	getNumDatasets();
+		int	getNumNodes();
+		int	getOutputInterval();
+		float	getTimestepInSeconds();
+
+		void	setGridID(QString newID);
 		void	setReader(Fort63IO *newReader);
 
 	private:
 
+		int		currentTimestep;
 		QVector<float>	elevations;
 		Fort63IO	*reader;
 

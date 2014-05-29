@@ -35,7 +35,7 @@ void MainWindow::connectActions()
 	// Connect the Adcirc file manager
 	fileManager.setProgressBar(ui->progressBar);
 	connect(&fileManager, SIGNAL(fort14Loaded(Fort14*)), this, SLOT(fort14Loaded(Fort14*)));
-	connect(&fileManager, SIGNAL(fort63Loaded(Fort63*,int)), this, SLOT(fort63Loaded(Fort63*,int)));
+	connect(&fileManager, SIGNAL(fort63Loaded(Fort63*)), this, SLOT(fort63Loaded(Fort63*)));
 
 	// Connect camera changes
 	connect(ui->button2D, SIGNAL(clicked()), ui->glPanel, SLOT(use2DCamera()));
@@ -133,10 +133,9 @@ void MainWindow::fort14Loaded(Fort14 *newFort14)
 }
 
 
-void MainWindow::fort63Loaded(Fort63 *newFort63, int ts)
+void MainWindow::fort63Loaded(Fort63 *newFort63)
 {
 	ui->scriptingWidget->AddScriptableObject(newFort63);
-	qDebug() << "Timestep " << ts << " loaded";
 }
 
 

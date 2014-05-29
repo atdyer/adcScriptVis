@@ -95,6 +95,24 @@ void LayerStack::wheelEvent(QWheelEvent *e)
 }
 
 
+GLCamera *LayerStack::getCurrentCamera()
+{
+	return camera;
+}
+
+
+GLCamera2D *LayerStack::get2DCamera()
+{
+	return cam2D;
+}
+
+
+GLCamera3D *LayerStack::get3DCamera()
+{
+	return cam3D;
+}
+
+
 void LayerStack::resetCamera()
 {
 	if (camera)

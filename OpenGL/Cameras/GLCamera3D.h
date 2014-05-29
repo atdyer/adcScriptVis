@@ -42,6 +42,13 @@ class GLCamera3D : public QObject, public GLCamera
 		float	zoom;
 		float	zoomScale;
 
+	public slots:
+
+		void	panCamera(float dx, float dy);
+		void	rotateCamera(float degrees);
+		void	tiltCamera(float degrees);
+		void	zoomCamera(int direction, float scale);
+
 };
 
 #endif // GLCAMERA3D_H

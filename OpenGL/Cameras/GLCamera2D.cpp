@@ -4,6 +4,7 @@ GLCamera2D::GLCamera2D(QObject *parent) :
 	QObject(parent),
 	GLCamera()
 {
+	setObjectName("cam2D");
 
 	width = 0;
 	height = 0;

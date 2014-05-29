@@ -5,11 +5,11 @@
 #include <QFile>
 #include <QThread>
 #include <QDebug>
+#include <QMap>
 
 #include "Adcirc/Data/AdcircData.h"
-//#include "Adcirc/Fort63.h"
+#include "Adcirc/Fort63.h"
 
-class Fort63;
 class Fort63IO : public QObject
 {
 		Q_OBJECT
@@ -19,17 +19,22 @@ class Fort63IO : public QObject
 
 	private:
 
-		Fort63	*fort63;
-		QFile	*file;
-		QString	fileLoc;
-		bool	fileMapped;
+		Fort63			*fort63;
+		QFile			*file;
+		QTextStream		fileStream;
+		QString			fileLoc;
+		bool			fileInitialized;
+		bool			fileMapped;
+		QMap<int, qint64>	map;
+		qint64			timestepSize;
 
 		void mapFile();
+		bool verifyHeader(int ts, QString header);
 
 	signals:
 
-		void fort63Loaded(Fort63*, int);
-		void progess(int);
+		void fort63Loaded(Fort63*);
+		void progress(int);
 		void progressStartValue(int);
 		void progressEndValue(int);
 		void readingInProgress(bool);

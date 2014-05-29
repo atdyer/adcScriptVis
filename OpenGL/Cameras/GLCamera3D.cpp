@@ -4,6 +4,8 @@ GLCamera3D::GLCamera3D(QObject *parent) :
 	QObject(parent),
 	GLCamera()
 {
+	setObjectName("cam3D");
+
 	width = 0;
 	height = 0;
 
@@ -51,8 +53,8 @@ void GLCamera3D::mouseMoveEvent(QMouseEvent *e)
 		dx = newX-oldX;
 		dy = newY-oldY;
 
-		zRot += dx/6.0;
-		xRot += dy/6.0;
+		rotateCamera(dx/6.0);
+		tiltCamera(dy/6.0);
 
 		oldX = newX;
 		oldY = newY;
@@ -65,14 +67,7 @@ void GLCamera3D::mouseMoveEvent(QMouseEvent *e)
 		dx = newX-oldX;
 		dy = newY-oldY;
 
-		float rads = qDegreesToRadians(zRot);
-		float c = cos(rads);
-		float s = sin(rads);
-		float scalingRatio = pixelToViewRatio/zoom;
-
-		panX += scalingRatio * (dx*c - dy*s);
-		panY -= scalingRatio * (dx*s + dy*c);
-//		panZ += scalingRatio * dy * sin(qDegreesToRadians(xRot));
+		panCamera(dx, dy);
 
 		oldX = newX;
 		oldY = newY;
@@ -95,6 +90,8 @@ void GLCamera3D::mouseReleaseEvent(QMouseEvent *)
 
 void GLCamera3D::reset()
 {
+	panX = 0.0;
+	panY = 0.0;
 	zoom = 1.0;
 	xRot = 0.0;
 	zRot = 0.0;
@@ -112,8 +109,39 @@ void GLCamera3D::setViewportSize(int w, int h)
 
 void GLCamera3D::wheelEvent(QWheelEvent *e)
 {
-	if (e->delta() > 0)
-		zoom *= zoomScale;
-	else
-		zoom /= zoomScale;
+	zoomCamera(e->delta(), zoomScale);
+}
+
+
+void GLCamera3D::panCamera(float dx, float dy)
+{
+	float rads = qDegreesToRadians(zRot);
+	float c = cos(rads);
+	float s = sin(rads);
+	float scalingRatio = pixelToViewRatio/zoom;
+
+	panX += scalingRatio * (dx*c - dy*s);
+	panY -= scalingRatio * (dx*s + dy*c);
+//	panZ += scalingRatio * dy * sin(qDegreesToRadians(xRot));
+}
+
+
+void GLCamera3D::rotateCamera(float degrees)
+{
+	zRot += degrees;
+}
+
+
+void GLCamera3D::tiltCamera(float degrees)
+{
+	xRot += degrees;
+}
+
+
+void GLCamera3D::zoomCamera(int direction, float scale)
+{
+	if (direction > 0)
+		zoom *= scale;
+	else if (direction < 0)
+		zoom /= scale;
 }

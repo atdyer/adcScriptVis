@@ -18,6 +18,10 @@ class OpenGLWidget : public QGLWidget
 		void	paintGL();
 		void	setCurrentLayerStack(LayerStack *newStack);
 
+		GLCamera	*getCurrentCamera();
+		GLCamera2D	*getCurrent2DCamera();
+		GLCamera3D	*getCurrent3DCamera();
+
 	protected:
 
 		void	mouseMoveEvent(QMouseEvent *e);
@@ -33,9 +37,14 @@ class OpenGLWidget : public QGLWidget
 
 	public slots:
 
+		void	refresh();
 		void	reset();
+		void	panCamera(float dx, float dy);
+		void	rotateCamera(float degrees);
+		void	tiltCamera(float degrees);
 		void	use2DCamera();
 		void	use3DCamera();
+		void	zoomCamera(int direction, float scale);
 
 };
 

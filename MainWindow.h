@@ -38,7 +38,7 @@ class MainWindow : public QMainWindow
 	protected slots:
 
 		void	fort14Loaded(Fort14 *newFort14);
-		void	fort63Loaded(Fort63 *newFort63, int ts);
+		void	fort63Loaded(Fort63 *newFort63);
 		void	setFullScreen(bool fs);
 		void	treeDoubleClicked(QModelIndex index);
 
