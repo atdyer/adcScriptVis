@@ -10,7 +10,7 @@ class GradientShader : public QObject, public GLShader
 {
 		Q_OBJECT
 	public:
-		explicit GradientShader(QObject *parent = 0);
+		explicit GradientShader(bool useWaterElevations, QObject *parent = 0);
 
 		void		setGradientStops(const QGradientStops &newStops);
 		void		setGradientRange(float newLow, float newHigh);

@@ -33,6 +33,8 @@ void OpenGLWidget::initializeGL()
 	glEnable(GL_ALPHA_TEST);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glPointSize(10);
+
+//	glDisable(GL_DITHER);
 //	glEnable(GL_POINT_SMOOTH);
 //	glEnable(GL_LINE_SMOOTH);
 

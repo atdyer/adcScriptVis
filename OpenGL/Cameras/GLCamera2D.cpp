@@ -26,7 +26,7 @@ GLCamera2D::GLCamera2D(QObject *parent) :
 const float *GLCamera2D::getMVP()
 {
 	MVPMatrix.setToIdentity();
-	MVPMatrix.ortho(-1.0*width/height, 1.0*width/height, -1.0, 1.0, -1000000.0, 1000000.0);
+	MVPMatrix.ortho(-1.0*width/height, 1.0*width/height, -1.0, 1.0, -1.0*zoom, 1.0*zoom);
 	MVPMatrix.scale(zoom);
 	MVPMatrix.translate(dx, dy);
 	return MVPMatrix.data();

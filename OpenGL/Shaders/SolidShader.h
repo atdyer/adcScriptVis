@@ -10,7 +10,7 @@ class SolidShader : public QObject, public GLShader
 {
 		Q_OBJECT
 	public:
-		explicit SolidShader(QObject *parent = 0);
+		explicit SolidShader(bool useWaterElevations, QObject *parent = 0);
 
 		void	getColor(QColor newColor);
 		void	setColor(QColor newColor);

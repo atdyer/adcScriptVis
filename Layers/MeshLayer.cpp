@@ -8,9 +8,6 @@ MeshLayer::MeshLayer(QObject *parent) :
 	numVertices = 0;
 	numIndices = 0;
 
-	outlineShader = 0;
-	fillShader = 0;
-
 	VAOId = 0;
 	VBOId = 0;
 	IBOId = 0;
@@ -32,23 +29,14 @@ MeshLayer::~MeshLayer()
 
 void MeshLayer::render()
 {
-	if (glLoaded && numVertices && numIndices)
+	if (glLoaded && numVertices && numIndices && shaders.size() > 0)
 	{
 		glBindVertexArray(VAOId);
 
-		if (fillShader)
+		for (int i=0; i<shaders.size(); ++i)
 		{
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-			if (fillShader->use())
-			{
-				glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, (GLvoid*)0);
-			}
-		}
-
-		if (outlineShader)
-		{
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-			if (outlineShader->use())
+			glPolygonMode(GL_FRONT_AND_BACK, shaders[i].type);
+			if (shaders[i].shader->use())
 			{
 				glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, (GLvoid*)0);
 			}
@@ -58,19 +46,18 @@ void MeshLayer::render()
 }
 
 
-void MeshLayer::setCamera(GLCamera *newCamera)
+void MeshLayer::appendShader(GLShader *shader, GLenum type)
 {
-	camera = newCamera;
-	if (outlineShader)
-		outlineShader->setCamera(camera);
-	if (fillShader)
-		fillShader->setCamera(camera);
+	if (shader)
+		shaders.append(ShaderPackage(shader, type));
 }
 
 
-void MeshLayer::setFillShader(GLShader *newFillShader)
+void MeshLayer::setCamera(GLCamera *newCamera)
 {
-	fillShader = newFillShader;
+	camera = newCamera;
+	for (int i=0; i<shaders.size(); ++i)
+		shaders[i].shader->setCamera(camera);
 }
 
 
@@ -138,18 +125,12 @@ void MeshLayer::setIndices(QVector<int> *indices)
 }
 
 
-void MeshLayer::setOutlineShader(GLShader *newOutlineShader)
-{
-	outlineShader = newOutlineShader;
-}
-
-
 void MeshLayer::setVertices(QVector<Node> *nodes)
 {
 	if (glLoaded)
 	{
 		numVertices = nodes->size();
-		const size_t vertexBufferSize = 4*sizeof(GLfloat)*numVertices;
+		const size_t vertexBufferSize = 8*sizeof(GLfloat)*numVertices;
 
 		glBindBuffer(GL_ARRAY_BUFFER, VBOId);
 		glBufferData(GL_ARRAY_BUFFER, vertexBufferSize, NULL, GL_STATIC_DRAW);
@@ -159,10 +140,15 @@ void MeshLayer::setVertices(QVector<Node> *nodes)
 		{
 			for (int i=0; i<nodes->size(); ++i)
 			{
-				glVertexData[4*i+0] = (GLfloat)nodes->at(i).x;
-				glVertexData[4*i+1] = (GLfloat)nodes->at(i).y;
-				glVertexData[4*i+2] = (GLfloat)nodes->at(i).z;
-				glVertexData[4*i+3] = (GLfloat)1.0;
+				glVertexData[8*i+0] = (GLfloat)nodes->at(i).x;
+				glVertexData[8*i+1] = (GLfloat)nodes->at(i).y;
+				glVertexData[8*i+2] = (GLfloat)nodes->at(i).z;
+				glVertexData[8*i+3] = (GLfloat)1.0;
+				glVertexData[8*i+4] = (GLfloat)0.0;
+				glVertexData[8*i+5] = (GLfloat)0.0;
+				glVertexData[8*i+6] = (GLfloat)0.0;
+				glVertexData[8*i+7] = (GLfloat)1.0;
+
 			}
 		} else {
 			numVertices = 0;
@@ -181,7 +167,7 @@ void MeshLayer::setVertices(QVector<float> *vertices)
 {
 	if (glLoaded)
 	{
-		numVertices = vertices->size() / 4;
+		numVertices = vertices->size() / 8;
 		const size_t vertexBufferSize = sizeof(GLfloat)*vertices->size();
 
 		glBindBuffer(GL_ARRAY_BUFFER, VBOId);
@@ -217,7 +203,9 @@ void MeshLayer::initializeGL()
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBOId);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4*sizeof(GLfloat), 0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 8*sizeof(GLfloat), 0);
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 8*sizeof(GLfloat), (GLvoid*)(4*sizeof(GLfloat)));
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBOId);
 

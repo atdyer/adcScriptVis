@@ -5,28 +5,52 @@ bool StopIsLessThan(const QGradientStop &stop1, const QGradientStop &stop2)
 	return stop1.first < stop2.first;
 }
 
-GradientShader::GradientShader(QObject *parent) :
+GradientShader::GradientShader(bool useWaterElevations, QObject *parent) :
 	QObject(parent),
 	GLShader()
 {
-	vertexSource = "#version 110"
-		       "\n"
-		       "attribute vec4 in_Position;"
-		       "varying vec4 ex_Color;"
-		       "uniform mat4 MVPMatrix;"
-		       "uniform int stopCount;"
-		       "uniform float values[10];"
-		       "uniform vec4 colors[10];"
-		       "void main(void)"
-		       "{"
-		       "	ex_Color = colors[0];"
-		       "	for (int i=1; i<stopCount; ++i)"
-		       "	{"
-		       "		float t = clamp((in_Position.z - values[i-1]) / (values[i]-values[i-1]), 0.0, 1.0);"
-		       "		ex_Color = mix(ex_Color, colors[i], t*t*(3.0 - 2.0*t));"
-		       "	}"
-		       "	gl_Position = MVPMatrix*(in_Position*vec4(1.0, 1.0, 0.1, 1.0));"
-		       "}";
+	if (!useWaterElevations)
+	{
+		vertexSource = "#version 110"
+			       "\n"
+			       "attribute vec4 in_Position;"
+			       "attribute vec4 water_Properties;"
+			       "varying vec4 ex_Color;"
+			       "uniform mat4 MVPMatrix;"
+			       "uniform int stopCount;"
+			       "uniform float values[10];"
+			       "uniform vec4 colors[10];"
+			       "void main(void)"
+			       "{"
+			       "	ex_Color = colors[0];"
+			       "	for (int i=1; i<stopCount; ++i)"
+			       "	{"
+			       "		float t = clamp((in_Position.z - values[i-1]) / (values[i]-values[i-1]), 0.0, 1.0);"
+			       "		ex_Color = mix(ex_Color, colors[i], t*t*(3.0 - 2.0*t));"
+			       "	}"
+			       "	gl_Position = MVPMatrix*(in_Position*vec4(1.0, 1.0, 0.1, 1.0));"
+			       "}";
+	} else {
+		vertexSource = "#version 110"
+			       "\n"
+			       "attribute vec4 in_Position;"
+			       "attribute vec4 water_Properties;"
+			       "varying vec4 ex_Color;"
+			       "uniform mat4 MVPMatrix;"
+			       "uniform int stopCount;"
+			       "uniform float values[10];"
+			       "uniform vec4 colors[10];"
+			       "void main(void)"
+			       "{"
+			       "	ex_Color = colors[0];"
+			       "	for (int i=1; i<stopCount; ++i)"
+			       "	{"
+			       "		float t = clamp((water_Properties.z - values[i-1]) / (values[i]-values[i-1]), 0.0, 1.0);"
+			       "		ex_Color = mix(ex_Color, colors[i], t*t*(3.0 - 2.0*t));"
+			       "	}"
+			       "	gl_Position = MVPMatrix*(in_Position*vec4(1.0, 1.0, 0.1, 1.0));"
+			       "}";
+	}
 
 	fragmentSource = "#version 110"
 			 "\n"
@@ -71,6 +95,7 @@ void GradientShader::compileShader()
 	{
 		programID = glCreateProgram();
 		glBindAttribLocation(programID, 0, "in_Position");
+		glBindAttribLocation(programID, 1, "water_Properties");
 		glAttachShader(programID, vertexShaderID);
 		glAttachShader(programID, fragmentShaderID);
 		glLinkProgram(programID);

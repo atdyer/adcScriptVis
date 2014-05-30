@@ -1,20 +1,38 @@
 #include "SolidShader.h"
 
-SolidShader::SolidShader(QObject *parent) :
+SolidShader::SolidShader(bool useWaterElevations, QObject *parent) :
 	QObject(parent),
 	GLShader()
 {
-	vertexSource = "#version 110"
-			"\n"
-			"attribute vec4 in_Position;"
-			"varying vec4 ex_Color;"
-			"uniform mat4 MVPMatrix;"
-			"uniform vec4 ColorVector;"
-			"void main(void)"
-			"{"
-			"       gl_Position = MVPMatrix*(in_Position*vec4(1.0, 1.0, 0.1, 1.0));"
-			"       ex_Color = ColorVector;"
-			"}";
+	if (!useWaterElevations)
+	{
+		vertexSource = "#version 110"
+				"\n"
+				"attribute vec4 in_Position;"
+				"attribute vec4 water_Properties;"
+				"varying vec4 ex_Color;"
+				"uniform mat4 MVPMatrix;"
+				"uniform vec4 ColorVector;"
+				"void main(void)"
+				"{"
+				"       gl_Position = MVPMatrix*(in_Position*vec4(1.0, 1.0, 0.1, 1.0));"
+				"       ex_Color = ColorVector;"
+				"}";
+	} else {
+		vertexSource = "#version 110"
+				"\n"
+				"attribute vec4 in_Position;"
+				"attribute vec4 water_Properties;"
+				"varying vec4 ex_Color;"
+				"uniform mat4 MVPMatrix;"
+				"uniform vec4 ColorVector;"
+				"void main(void)"
+				"{"
+				"	vec4 waterPosition = vec4(in_Position.x, in_Position.y, water_Properties.z, in_Position.w);"
+				"       gl_Position = MVPMatrix*(waterPosition*vec4(1.0, 1.0, 0.1, 1.0));"
+				"       ex_Color = ColorVector;"
+				"}";
+	}
 
 	fragmentSource = "#version 110"
 			"\n"
@@ -50,6 +68,7 @@ void SolidShader::compileShader()
 	{
 		programID = glCreateProgram();
 		glBindAttribLocation(programID, 0, "in_Position");
+		glBindAttribLocation(programID, 1, "water_Properties");
 		glAttachShader(programID, vertexShaderID);
 		glAttachShader(programID, fragmentShaderID);
 		glLinkProgram(programID);

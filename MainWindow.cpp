@@ -93,10 +93,12 @@ void MainWindow::fort14Loaded(Fort14 *newFort14)
 	{
 		LayerStack *testStack = new LayerStack(this);
 		MeshLayer *testMesh = new MeshLayer(this);
-		SolidShader *outlineShader = new SolidShader(this);
-		GradientShader *fillShader = new GradientShader(this);
+		SolidShader *outlineShader = new SolidShader(false, this);
+		GradientShader *fillShader = new GradientShader(false, this);
+		SolidShader *waterFill = new SolidShader(true, this);
 
 		QColor outlineColor (0.2*255, 0.2*255, 0.2*255, 0.1*255);
+		QColor waterColor (0.0, 0.0, 1.0*255, 0.5*255);
 
 		float minZ = newFort14->getMinZ();
 		float maxZ = newFort14->getMaxZ();
@@ -120,11 +122,13 @@ void MainWindow::fort14Loaded(Fort14 *newFort14)
 		outlineShader->setColor(outlineColor);
 		fillShader->setGradientRange(minZ, maxZ);
 		fillShader->setGradientStops(stops);
+		waterFill->setColor(waterColor);
 
 		testMesh->setVertices(newFort14->getNodes());
 		testMesh->setIndices(newFort14->getElements());
-		testMesh->setOutlineShader(outlineShader);
-		testMesh->setFillShader(fillShader);
+		testMesh->appendShader(fillShader, GL_FILL);
+		testMesh->appendShader(outlineShader, GL_LINE);
+		testMesh->appendShader(waterFill, GL_FILL);
 
 		testStack->appendLayer(testMesh);
 
