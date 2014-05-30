@@ -10,11 +10,10 @@
 #include "OpenGL/Cameras/GLCamera.h"
 #include "OpenGL/Shaders/GLShader.h"
 
-class MeshLayer : public QObject, public Layer
+class MeshLayer : public Layer
 {
-		Q_OBJECT
 	public:
-		explicit MeshLayer(QObject *parent = 0);
+		explicit MeshLayer();
 		~MeshLayer();
 
 		virtual void	render();
@@ -25,6 +24,7 @@ class MeshLayer : public QObject, public Layer
 		void		setIndices(QVector<int> *indices);
 		void		setVertices(QVector<Node> *nodes);
 		void		setVertices(QVector<float> *vertices);
+		void		setVertices(QVector<float> *vertices, int offset);
 
 
 	private:
@@ -37,6 +37,8 @@ class MeshLayer : public QObject, public Layer
 		};
 
 		bool	glLoaded;
+		bool	glIndicesInitialized;
+		bool	glVerticesInitialized;
 		int	numVertices;
 		int	numIndices;
 

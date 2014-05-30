@@ -19,6 +19,17 @@ void LayerStack::appendLayer(Layer *layer)
 }
 
 
+void LayerStack::appendLayer(MeshLayerAdcirc *layer)
+{
+	if (layer)
+	{
+		layer->setCamera(camera);
+		connect(layer, SIGNAL(updateGL()), this, SIGNAL(updateGL()));
+		layers.append(layer);
+	}
+}
+
+
 void LayerStack::insertLayer(int i, Layer *layer)
 {
 	if (layer)
@@ -29,11 +40,33 @@ void LayerStack::insertLayer(int i, Layer *layer)
 }
 
 
+void LayerStack::insertLayer(int i, MeshLayerAdcirc *layer)
+{
+	if (layer)
+	{
+		layer->setCamera(camera);
+		connect(layer, SIGNAL(updateGL()), this, SIGNAL(updateGL()));
+		layers.insert(i, layer);
+	}
+}
+
+
 void LayerStack::prependLayer(Layer *layer)
 {
 	if (layer)
 	{
 		layer->setCamera(camera);
+		layers.prepend(layer);
+	}
+}
+
+
+void LayerStack::prependLayer(MeshLayerAdcirc *layer)
+{
+	if (layer)
+	{
+		layer->setCamera(camera);
+		connect(layer, SIGNAL(updateGL()), this, SIGNAL(updateGL()));
 		layers.prepend(layer);
 	}
 }

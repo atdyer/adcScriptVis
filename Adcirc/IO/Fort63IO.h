@@ -38,6 +38,7 @@ class Fort63IO : public QObject
 		void progressStartValue(int);
 		void progressEndValue(int);
 		void readingInProgress(bool);
+		void timestepLoaded(Fort63*, int);
 
 	public slots:
 

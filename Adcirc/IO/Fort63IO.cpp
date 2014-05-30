@@ -47,6 +47,7 @@ void Fort63IO::mapFile()
 			if (currProgress % onePercent == 0)
 				emit progress(currProgress);
 		}
+		emit timestepLoaded(fort63, 1);
 		fileStream.readLine();
 
 		// Calculate the timestep's size
@@ -57,6 +58,7 @@ void Fort63IO::mapFile()
 		{
 			// Mark the position of the second timestep
 			map[2] = fileStream.pos();
+			fileMapped = true;
 
 			// Map the rest of the timesteps
 			for (int ts=2; ts<fort63->_numDatasets; ++ts)
@@ -68,6 +70,7 @@ void Fort63IO::mapFile()
 					map[ts+1] = fileStream.pos();
 				} else {
 					qDebug() << "Mapping error in timestep" << ts;
+					fileMapped = false;
 					break;
 				}
 
@@ -76,9 +79,7 @@ void Fort63IO::mapFile()
 					emit progress(currProgress);
 			}
 		}
-
 		emit readingInProgress(false);
-
 	}
 }
 
@@ -127,5 +128,45 @@ void Fort63IO::initialize()
 
 void Fort63IO::loadTimestep(int ts)
 {
-	qDebug() << "Loading timestep " << ts << " on thread: " << thread();
+	if (fileMapped && file->isOpen())
+	{
+//		fileStream.seek(map[ts]);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

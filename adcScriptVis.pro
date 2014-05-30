@@ -37,7 +37,8 @@ SOURCES += main.cpp\
     OpenGL/Cameras/GLCamera3D.cpp \
     Adcirc/Fort63.cpp \
     Adcirc/IO/Fort63IO.cpp \
-    Adcirc/AdcircFileManager.cpp
+    Adcirc/AdcircFileManager.cpp \
+    Layers/MeshLayerAdcirc.cpp
 
 HEADERS  += MainWindow.h \
     Scripting/ScriptingWidget.h \
@@ -67,7 +68,8 @@ HEADERS  += MainWindow.h \
     OpenGL/Cameras/GLCamera3D.h \
     Adcirc/Fort63.h \
     Adcirc/IO/Fort63IO.h \
-    Adcirc/AdcircFileManager.h
+    Adcirc/AdcircFileManager.h \
+    Layers/MeshLayerAdcirc.h
 
 FORMS    += MainWindow.ui \
     Scripting/ScriptingWidget.ui

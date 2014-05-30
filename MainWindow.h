@@ -11,6 +11,7 @@
 #include "Adcirc/Fort63.h"
 #include "Layers/LayerStack.h"
 #include "Layers/MeshLayer.h"
+#include "Layers/MeshLayerAdcirc.h"
 #include "OpenGL/Shaders/SolidShader.h"
 #include "OpenGL/Shaders/GradientShader.h"
 
@@ -37,8 +38,7 @@ class MainWindow : public QMainWindow
 
 	protected slots:
 
-		void	fort14Loaded(Fort14 *newFort14);
-		void	fort63Loaded(Fort63 *newFort63);
+		void	meshLayerLoaded(MeshLayerAdcirc *meshLayer);
 		void	setFullScreen(bool fs);
 		void	treeDoubleClicked(QModelIndex index);
 

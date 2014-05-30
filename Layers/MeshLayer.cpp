@@ -1,10 +1,11 @@
 #include "MeshLayer.h"
 
-MeshLayer::MeshLayer(QObject *parent) :
-	QObject(parent),
+MeshLayer::MeshLayer() :
 	Layer()
 {
 	glLoaded = false;
+	glIndicesInitialized = false;
+	glVerticesInitialized = false;
 	numVertices = 0;
 	numIndices = 0;
 
@@ -49,7 +50,11 @@ void MeshLayer::render()
 void MeshLayer::appendShader(GLShader *shader, GLenum type)
 {
 	if (shader)
+	{
+		if (camera)
+			shader->setCamera(camera);
 		shaders.append(ShaderPackage(shader, type));
+	}
 }
 
 
@@ -88,6 +93,8 @@ void MeshLayer::setIndices(QVector<Element> *elements)
 		glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
+		glIndicesInitialized = true;
+
 	} else {
 		qDebug() << "Mesh Layer: Unable to set elements, GL not initialized";
 	}
@@ -118,6 +125,8 @@ void MeshLayer::setIndices(QVector<int> *indices)
 
 		glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+		glIndicesInitialized = true;
 
 	} else {
 		qDebug() << "Mesh Layer: Unable to set indices, GL not initialized";
@@ -157,6 +166,8 @@ void MeshLayer::setVertices(QVector<Node> *nodes)
 
 		glUnmapBuffer(GL_ARRAY_BUFFER);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		glVerticesInitialized = true;
 	} else {
 		qDebug() << "Mesh Layer: Unable to set nodes, GL not initialized";
 	}
@@ -187,8 +198,35 @@ void MeshLayer::setVertices(QVector<float> *vertices)
 
 		glUnmapBuffer(GL_ARRAY_BUFFER);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		glVerticesInitialized = true;
 	} else {
 		qDebug() << "Mesh Layer: Unable to set vertices, GL not initialized";
+	}
+}
+
+
+void MeshLayer::setVertices(QVector<float> *vertices, int offset)
+{
+	if (glLoaded && glVerticesInitialized)
+	{
+		offset = offset % 8;
+		glBindBuffer(GL_ARRAY_BUFFER, VBOId);
+		GLfloat *glVertexData = (GLfloat *)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+		if (glVertexData)
+		{
+			for (int i=0; i<numVertices; ++i)
+			{
+				glVertexData[8*i+offset] = (GLfloat)vertices->at(i);
+			}
+		} else {
+			qDebug() << "Mesh Layer: Unable to map vertex buffer";
+		}
+
+		glUnmapBuffer(GL_ARRAY_BUFFER);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	} else {
+		qDebug() << "Mesh Layer: Unable to set vertex values, GL not initialized";
 	}
 }
 

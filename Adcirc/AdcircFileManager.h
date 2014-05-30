@@ -10,6 +10,7 @@
 #include "Adcirc/Fort63.h"
 #include "Adcirc/IO/Fort14IO.h"
 #include "Adcirc/IO/Fort63IO.h"
+#include "Layers/MeshLayerAdcirc.h"
 
 class AdcircFileManager : public QObject
 {
@@ -26,15 +27,19 @@ class AdcircFileManager : public QObject
 		QProgressBar	*progressBar;
 		QThread		workerThread;
 
+		MeshLayerAdcirc	*testLayer;
+
 		void	openFort14(QString fileLocation);
 		void	openFort63(QString fileLocation);
 
 	signals:
 
-		void	fort14Loaded(Fort14 *fort14);
-		void	fort63Loaded(Fort63 *fort63);
+		void	meshLayerLoaded(MeshLayerAdcirc *meshLayer);
 
 	public slots:
+
+		void	fort14Loaded(Fort14 *fort14);
+		void	fort63Loaded(Fort63 *fort63);
 
 };
 

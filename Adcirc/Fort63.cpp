@@ -21,6 +21,12 @@ Fort63::~Fort63()
 }
 
 
+QVector<float> *Fort63::getElevations()
+{
+	return &elevations;
+}
+
+
 QString Fort63::getGridID()
 {
 	return _gridID;
@@ -60,6 +66,7 @@ void Fort63::setGridID(QString newID)
 void Fort63::setReader(Fort63IO *newReader)
 {
 	reader = newReader;
+	connect(reader, SIGNAL(timestepLoaded(Fort63*,int)), this, SIGNAL(timestepLoaded(Fort63*,int)));
 }
 
 

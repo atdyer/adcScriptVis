@@ -34,8 +34,7 @@ void MainWindow::connectActions()
 
 	// Connect the Adcirc file manager
 	fileManager.setProgressBar(ui->progressBar);
-	connect(&fileManager, SIGNAL(fort14Loaded(Fort14*)), this, SLOT(fort14Loaded(Fort14*)));
-	connect(&fileManager, SIGNAL(fort63Loaded(Fort63*)), this, SLOT(fort63Loaded(Fort63*)));
+	connect(&fileManager, SIGNAL(meshLayerLoaded(MeshLayerAdcirc*)), this, SLOT(meshLayerLoaded(MeshLayerAdcirc*)));
 
 	// Connect camera changes
 	connect(ui->button2D, SIGNAL(clicked()), ui->glPanel, SLOT(use2DCamera()));
@@ -83,23 +82,21 @@ void MainWindow::saveSettings()
 }
 
 
-void MainWindow::fort14Loaded(Fort14 *newFort14)
+void MainWindow::meshLayerLoaded(MeshLayerAdcirc *meshLayer)
 {
-//	newFort14->setParent(this);
-	ui->scriptingWidget->AddScriptableObject(newFort14);
-
-	/////////////// TESTING /////////////////////
-	if (newFort14)
+	if (meshLayer)
 	{
+		Fort14 *newFort14 = meshLayer->getFort14();
+		ui->scriptingWidget->AddScriptableObject(newFort14);
 		LayerStack *testStack = new LayerStack(this);
-		MeshLayer *testMesh = new MeshLayer(this);
 		SolidShader *outlineShader = new SolidShader(false, this);
 		GradientShader *fillShader = new GradientShader(false, this);
-		SolidShader *waterFill = new SolidShader(true, this);
+		GradientShader *waterFill = new GradientShader(true, this);
 
+		// Outline Color
 		QColor outlineColor (0.2*255, 0.2*255, 0.2*255, 0.1*255);
-		QColor waterColor (0.0, 0.0, 1.0*255, 0.5*255);
 
+		// Terrain Color
 		float minZ = newFort14->getMinZ();
 		float maxZ = newFort14->getMaxZ();
 		float zDiff = maxZ - minZ;
@@ -119,27 +116,26 @@ void MainWindow::fort14Loaded(Fort14 *newFort14)
 			stops << QGradientStop(percentage, colors[i]);
 		}
 
+		// Water Color
+		QGradientStops waterStops;
+		waterStops << QGradientStop(0.0, QColor::fromRgb(255, 0, 0, 0.4*255));
+		waterStops << QGradientStop(1.0, QColor::fromRgb(0, 0, 255, 0.4*255));
+
 		outlineShader->setColor(outlineColor);
 		fillShader->setGradientRange(minZ, maxZ);
 		fillShader->setGradientStops(stops);
-		waterFill->setColor(waterColor);
+		waterFill->setGradientRange(-0.1, 0.1);
+		waterFill->setGradientStops(waterStops);
 
-		testMesh->setVertices(newFort14->getNodes());
-		testMesh->setIndices(newFort14->getElements());
-		testMesh->appendShader(fillShader, GL_FILL);
-		testMesh->appendShader(outlineShader, GL_LINE);
-		testMesh->appendShader(waterFill, GL_FILL);
+		meshLayer->appendShader(fillShader, GL_FILL);
+		meshLayer->appendShader(outlineShader, GL_LINE);
+		meshLayer->appendShader(waterFill, GL_FILL);
 
-		testStack->appendLayer(testMesh);
+		testStack->appendLayer(meshLayer);
 
 		ui->glPanel->setCurrentLayerStack(testStack);
+
 	}
-}
-
-
-void MainWindow::fort63Loaded(Fort63 *newFort63)
-{
-	ui->scriptingWidget->AddScriptableObject(newFort63);
 }
 
 

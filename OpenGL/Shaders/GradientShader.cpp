@@ -43,12 +43,13 @@ GradientShader::GradientShader(bool useWaterElevations, QObject *parent) :
 			       "void main(void)"
 			       "{"
 			       "	ex_Color = colors[0];"
+			       "	vec4 waterPosition = vec4(in_Position.x, in_Position.y, water_Properties.z, in_Position.w);"
 			       "	for (int i=1; i<stopCount; ++i)"
 			       "	{"
 			       "		float t = clamp((water_Properties.z - values[i-1]) / (values[i]-values[i-1]), 0.0, 1.0);"
 			       "		ex_Color = mix(ex_Color, colors[i], t*t*(3.0 - 2.0*t));"
 			       "	}"
-			       "	gl_Position = MVPMatrix*(in_Position*vec4(1.0, 1.0, 0.1, 1.0));"
+			       "	gl_Position = MVPMatrix*(waterPosition);"
 			       "}";
 	}
 

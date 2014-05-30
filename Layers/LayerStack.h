@@ -9,6 +9,7 @@
 #include "OpenGL/Cameras/GLCamera2D.h"
 #include "OpenGL/Cameras/GLCamera3D.h"
 #include "Layers/Layer.h"
+#include "Layers/MeshLayerAdcirc.h"
 
 class LayerStack : public QObject
 {
@@ -17,8 +18,11 @@ class LayerStack : public QObject
 		explicit LayerStack(QObject *parent = 0);
 
 		void	appendLayer(Layer *layer);
+		void	appendLayer(MeshLayerAdcirc *layer);
 		void	insertLayer(int i, Layer *layer);
+		void	insertLayer(int i, MeshLayerAdcirc *layer);
 		void	prependLayer(Layer *layer);
+		void	prependLayer(MeshLayerAdcirc *layer);
 		void	removeLayer(int i);
 		void	render();
 

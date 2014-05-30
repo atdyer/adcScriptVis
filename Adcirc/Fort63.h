@@ -24,14 +24,15 @@ class Fort63 : public QObject
 		explicit Fort63(QObject *parent = 0);
 		~Fort63();
 
-		QString	getGridID();
-		int	getNumDatasets();
-		int	getNumNodes();
-		int	getOutputInterval();
-		float	getTimestepInSeconds();
+		QVector<float>	*getElevations();
+		QString		getGridID();
+		int		getNumDatasets();
+		int		getNumNodes();
+		int		getOutputInterval();
+		float		getTimestepInSeconds();
 
-		void	setGridID(QString newID);
-		void	setReader(Fort63IO *newReader);
+		void		setGridID(QString newID);
+		void		setReader(Fort63IO *newReader);
 
 	private:
 
@@ -44,6 +45,10 @@ class Fort63 : public QObject
 		int		_numNodes;
 		int		_outputInterval;
 		float		_timestepSeconds;
+
+	signals:
+
+		void	timestepLoaded(Fort63*, int);
 
 	public slots:
 
