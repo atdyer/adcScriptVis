@@ -13,6 +13,7 @@ class Fort63 : public QObject
 {
 		Q_OBJECT
 		Q_PROPERTY(QString gridID READ getGridID WRITE setGridID)
+		Q_PROPERTY(int currentTimestep READ getCurrentTimestep WRITE setCurrentTimestep)
 		Q_PROPERTY(int numDatasets READ getNumDatasets)
 		Q_PROPERTY(int numNodes READ getNumNodes)
 		Q_PROPERTY(int outputInterval READ getOutputInterval)
@@ -25,26 +26,28 @@ class Fort63 : public QObject
 		~Fort63();
 
 		QVector<float>	*getElevations();
+		int		getCurrentTimestep();
 		QString		getGridID();
 		int		getNumDatasets();
 		int		getNumNodes();
 		int		getOutputInterval();
 		float		getTimestepInSeconds();
 
+		void		setCurrentTimestep(int ts);
 		void		setGridID(QString newID);
 		void		setReader(Fort63IO *newReader);
 
 	private:
 
-		int		currentTimestep;
 		QVector<float>	elevations;
 		Fort63IO	*reader;
 
-		QString		_gridID;
-		int		_numDatasets;
-		int		_numNodes;
-		int		_outputInterval;
-		float		_timestepSeconds;
+		int		currentTimestep;
+		QString		gridID;
+		int		numDatasets;
+		int		numNodes;
+		int		outputInterval;
+		float		timestepSeconds;
 
 	signals:
 

@@ -7,11 +7,13 @@ Fort63::Fort63(QObject *parent) :
 	setObjectName("fort63");
 
 	reader = 0;
-	_gridID = "None";
-	_numDatasets = 0;
-	_numNodes = 0;
-	_outputInterval = 0;
-	_timestepSeconds = 0.0;
+
+	currentTimestep = 0;
+	gridID = "None";
+	numDatasets = 0;
+	numNodes = 0;
+	outputInterval = 0;
+	timestepSeconds = 0.0;
 }
 
 
@@ -27,39 +29,51 @@ QVector<float> *Fort63::getElevations()
 }
 
 
+int Fort63::getCurrentTimestep()
+{
+	return currentTimestep;
+}
+
+
 QString Fort63::getGridID()
 {
-	return _gridID;
+	return gridID;
 }
 
 
 int Fort63::getNumDatasets()
 {
-	return _numDatasets;
+	return numDatasets;
 }
 
 
 int Fort63::getNumNodes()
 {
-	return _numNodes;
+	return numNodes;
 }
 
 
 int Fort63::getOutputInterval()
 {
-	return _outputInterval;
+	return outputInterval;
 }
 
 
 float Fort63::getTimestepInSeconds()
 {
-	return _timestepSeconds;
+	return timestepSeconds;
+}
+
+
+void Fort63::setCurrentTimestep(int ts)
+{
+	loadTimestep(ts);
 }
 
 
 void Fort63::setGridID(QString newID)
 {
-	_gridID = newID;
+	gridID = newID;
 }
 
 

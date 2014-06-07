@@ -104,6 +104,7 @@ void OpenGLWidget::mouseMoveEvent(QMouseEvent *e)
 
 void OpenGLWidget::mousePressEvent(QMouseEvent *e)
 {
+	grabKeyboard();
 	if (currentLayerStack)
 		currentLayerStack->mousePressEvent(e);
 }
@@ -113,6 +114,13 @@ void OpenGLWidget::mouseReleaseEvent(QMouseEvent *e)
 {
 	if (currentLayerStack)
 		currentLayerStack->mouseReleaseEvent(e);
+}
+
+
+void OpenGLWidget::keyPressEvent(QKeyEvent *e)
+{
+	if (currentLayerStack)
+		currentLayerStack->keyPressEvent(e);
 }
 
 

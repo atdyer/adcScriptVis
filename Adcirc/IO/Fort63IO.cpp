@@ -22,7 +22,7 @@ void Fort63IO::mapFile()
 	if (file && file->isOpen() && fileInitialized)
 	{
 		int currProgress = 0;
-		int maxProgress = fort63->_numNodes + fort63->_numDatasets-1;
+		int maxProgress = fort63->numNodes + fort63->numDatasets-1;
 		int onePercent = 0.01 * maxProgress;
 		emit progressStartValue(0);
 		emit progressEndValue(maxProgress);
@@ -37,7 +37,7 @@ void Fort63IO::mapFile()
 		// Read the first timestep's values
 		int node;
 		float elevation;
-		for (int i=0; i<fort63->_numNodes; ++i)
+		for (int i=0; i<fort63->numNodes; ++i)
 		{
 			fileStream >> node;
 			fileStream >> elevation;
@@ -48,6 +48,7 @@ void Fort63IO::mapFile()
 				emit progress(currProgress);
 		}
 		emit timestepLoaded(fort63, 1);
+		fort63->currentTimestep = 1;
 		fileStream.readLine();
 
 		// Calculate the timestep's size
@@ -61,7 +62,7 @@ void Fort63IO::mapFile()
 			fileMapped = true;
 
 			// Map the rest of the timesteps
-			for (int ts=2; ts<fort63->_numDatasets; ++ts)
+			for (int ts=2; ts<fort63->numDatasets; ++ts)
 			{
 				// Seek to the correct position
 				fileStream.seek(fileStream.pos() + timestepSize);
@@ -89,8 +90,8 @@ bool Fort63IO::verifyHeader(int ts, QString header)
 	QStringList headerValues = header.split(QRegExp("\\s+"), QString::SkipEmptyParts);
 	if (headerValues.length() == 2)
 	{
-		float targetTime = ts * fort63->_timestepSeconds * fort63->_outputInterval;
-		float targetTimestep = ts * fort63->_outputInterval;
+		float targetTime = ts * fort63->timestepSeconds * fort63->outputInterval;
+		float targetTimestep = ts * fort63->outputInterval;
 		bool timeHit = headerValues[0].toFloat() == targetTime;
 		bool timestepHit = headerValues[1].toInt() == targetTimestep;
 		return timeHit && timestepHit;
@@ -110,13 +111,13 @@ void Fort63IO::initialize()
 
 	// Read the header
 	fort63->setGridID(fileStream.readLine());
-	fileStream >> fort63->_numDatasets;
-	fileStream >> fort63->_numNodes;
-	fort63->elevations.reserve(fort63->_numNodes);
+	fileStream >> fort63->numDatasets;
+	fileStream >> fort63->numNodes;
+	fort63->elevations.reserve(fort63->numNodes);
 	float temp;
 	fileStream >> temp;
-	fileStream >> fort63->_outputInterval;
-	fort63->_timestepSeconds = temp/fort63->_outputInterval;
+	fileStream >> fort63->outputInterval;
+	fort63->timestepSeconds = temp/fort63->outputInterval;
 	fileStream.readLine();
 	fileInitialized = true;
 
@@ -130,6 +131,8 @@ void Fort63IO::loadTimestep(int ts)
 {
 	if (fileMapped && file->isOpen())
 	{
+		fort63->currentTimestep = ts;
+		emit timestepLoaded(fort63, ts);
 //		fileStream.seek(map[ts]);
 	}
 }

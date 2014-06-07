@@ -32,11 +32,11 @@ class Fort14 : public QObject
 
 	private:
 
-		QString	_gridID;
-		float	_minZ;
-		float	_maxZ;
-		int	_numNodes;
-		int	_numElements;
+		QString	gridID;
+		float	minZ;
+		float	maxZ;
+		int	numNodes;
+		int	numElements;
 
 		QVector<Node>		nodes;
 		QVector<Element>	elements;

@@ -1,6 +1,8 @@
 #ifndef LAYER_H
 #define LAYER_H
 
+#include <QKeyEvent>
+
 #include "OpenGL/Cameras/GLCamera.h"
 
 class Layer
@@ -10,6 +12,8 @@ class Layer
 
 		virtual void	render() = 0;
 		virtual void	setCamera(GLCamera *newCamera);
+
+		virtual void	keyPressEvent(QKeyEvent *e);
 
 	protected:
 

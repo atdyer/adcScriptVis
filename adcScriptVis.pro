@@ -4,9 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui opengl script
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT       += core gui opengl script widgets
 
 TARGET = adcScriptVis
 TEMPLATE = app

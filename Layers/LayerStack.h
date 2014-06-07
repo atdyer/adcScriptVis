@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QMouseEvent>
+#include <QKeyEvent>
 #include <QWheelEvent>
 
 #include "OpenGL/Cameras/GLCamera.h"
@@ -30,6 +31,7 @@ class LayerStack : public QObject
 		void	mouseMoveEvent(QMouseEvent *e);
 		void	mousePressEvent(QMouseEvent *e);
 		void	mouseReleaseEvent(QMouseEvent *e);
+		void	keyPressEvent(QKeyEvent *e);
 		void	wheelEvent(QWheelEvent *e);
 
 

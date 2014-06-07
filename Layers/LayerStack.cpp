@@ -120,6 +120,17 @@ void LayerStack::mouseReleaseEvent(QMouseEvent *e)
 }
 
 
+void LayerStack::keyPressEvent(QKeyEvent *e)
+{
+	for (int i=0; i<layers.size(); ++i)
+	{
+		if (layers[i])
+			layers[i]->keyPressEvent(e);
+	}
+	emit updateGL();
+}
+
+
 void LayerStack::wheelEvent(QWheelEvent *e)
 {
 	if (camera)

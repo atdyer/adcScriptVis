@@ -2,6 +2,7 @@
 #define MESHLAYERADCIRC_H
 
 #include <QObject>
+#include <QKeyEvent>
 
 #include "Adcirc/Fort14.h"
 #include "Adcirc/Fort63.h"
@@ -17,6 +18,8 @@ class MeshLayerAdcirc : public QObject, public MeshLayer
 
 		void	setFort14(Fort14 *fort14);
 		void	setFort63(Fort63 *fort63);
+
+		virtual void	keyPressEvent(QKeyEvent *e);
 
 	private:
 

@@ -41,7 +41,23 @@ void MeshLayerAdcirc::timestepLoaded(Fort63 *fort63, int ts)
 {
 	if (fort63)
 	{
+		qDebug() << "Timestep loaded: " << ts;
 		setVertices(fort63->getElevations(), 6);
 		emit updateGL();
+	}
+}
+
+
+void MeshLayerAdcirc::keyPressEvent(QKeyEvent *e)
+{
+	if (e->key() == Qt::Key_Right)
+	{
+		if (fort63)
+			fort63->loadTimestep(fort63->getCurrentTimestep()+1);
+	}
+	else if (e->key() == Qt::Key_Left)
+	{
+		if (fort63)
+			fort63->loadTimestep(fort63->getCurrentTimestep()-1);
 	}
 }
