@@ -30,7 +30,12 @@ SolidShader::SolidShader(bool useWaterElevations, QObject *parent) :
 				"{"
 				"	vec4 waterPosition = vec4(in_Position.x, in_Position.y, water_Properties.z, in_Position.w);"
 				"       gl_Position = MVPMatrix*(waterPosition*vec4(1.0, 1.0, 0.1, 1.0));"
-				"       ex_Color = ColorVector;"
+				"	if (water_Properties.z == -99999.0)"
+				"	{"
+				"		ex_Color = vec4(1.0, 0.0, 0.0, 1.0);"
+				"	} else {"
+				"		ex_Color = ColorVector;"
+				"	}"
 				"}";
 	}
 

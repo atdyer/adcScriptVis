@@ -129,11 +129,39 @@ void Fort63IO::initialize()
 
 void Fort63IO::loadTimestep(int ts)
 {
-	if (fileMapped && file->isOpen())
+	if (fileMapped && file->isOpen() && ts > 0 && ts < fort63->numDatasets)
 	{
-		fort63->currentTimestep = ts;
-		emit timestepLoaded(fort63, ts);
-//		fileStream.seek(map[ts]);
+		qint64 tsStart = map.value(ts, -1);
+
+		if (tsStart != -1)
+		{
+
+			int currProgress = 0;
+			int maxProgress = fort63->numNodes;
+			int onePercent = 0.01*maxProgress;
+			emit progressStartValue(0);
+			emit progressEndValue(maxProgress);
+			emit readingInProgress(true);
+
+			fileStream.seek(tsStart);
+			int node;
+			float elevation;
+			for (int i=0; i<fort63->numNodes; ++i)
+			{
+				fileStream >> node;
+				fileStream >> elevation;
+				fort63->elevations[node-1] = elevation;
+
+				++currProgress;
+				if (currProgress % onePercent == 0)
+					emit progress(currProgress);
+			}
+
+			fort63->currentTimestep = ts;
+			emit readingInProgress(false);
+			emit timestepLoaded(fort63, ts);
+
+		}
 	}
 }
 
